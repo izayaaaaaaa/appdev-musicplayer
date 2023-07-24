@@ -11,7 +11,7 @@ import javax.swing.JTable;
 public class MP3PlayerView extends JFrame{
     
     JPanel panel1, panel2, panelA, panelB, panelC, panelD;
-    JButton showPlay, showPause, showFastForward, showBacktrack, showNextSong, showPreviousSong;
+    JButton showPlayPause, showFastForward, showBacktrack, showNextSong, showPreviousSong;
     JTable showPlaylist;
     JScrollPane sp;
     JProgressBar pb;
@@ -47,9 +47,19 @@ public class MP3PlayerView extends JFrame{
         c.gridy = 3;
         panelD = new JPanel();
         panelD.setBackground(Color.PINK);
-        panel1.add(panelD, c);
-        panelD.add(showPlay);
 
+        showPreviousSong();
+            panelD.add(showPreviousSong);
+        showBacktrack();
+            panelD.add(showBacktrack);
+        showPlayPauseButton();
+            panelD.add(showPlayPause);
+        showFastForward();
+            panelD.add(showFastForward);
+        showNextSong();
+            panelD.add(showNextSong);
+
+        panel1.add(panelD, c);
 
         panel2 = new JPanel(new BorderLayout());
         panel2.setBackground(Color.RED);
@@ -67,19 +77,11 @@ public class MP3PlayerView extends JFrame{
 
     public void showCurrentSong(String songName) {
         // Display the current song on the UI
-
     }
 
-    public void showPlayButton() {
+    public void showPlayPauseButton() {
         // Display the play button on the UI
-        showPlay = new JButton("Play");
-
-    }
-
-    public void showPauseButton() {
-        // Display the pause button on the UI
-        showPause = new JButton("Pause");
-
+        showPlayPause = new JButton("Play/Pause");
     }
 
     public void showFastForward(){
