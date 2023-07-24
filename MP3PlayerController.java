@@ -1,5 +1,9 @@
 // connects the physical form to the action
-public class MP3PlayerController {
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class MP3PlayerController implements ActionListener {
     private MP3PlayerModel model;
     private MP3PlayerView view;
 
@@ -8,9 +12,21 @@ public class MP3PlayerController {
         this.view = view;
     }
 
-    public void onPlayBtnClicked() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == view.playBtn) {
+            // print console
+            System.out.println("Play button clicked");
+            // Logic for handling the Play button click
+            // if (model.isPlaying()) {
+            //     // If currently playing, pause the playback
+            //     model.setPlaying(false);
+            //     view.playBtn.setText("Play"); // Change button text to "Play"
+            // } else {
+            //     // If currently paused or stopped, start playback
+            //     model.setPlaying(true);
+            //     view.playBtn.setText("Pause"); // Change button text to "Pause"
+        }
         
     }
-    
-    
 }
