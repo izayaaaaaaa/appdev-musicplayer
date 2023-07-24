@@ -1,3 +1,4 @@
+// action words
 import java.util.List;
 
 public class MP3PlayerModel {
@@ -23,7 +24,4 @@ public class MP3PlayerModel {
     public void setPlaylist(List<String> playlist) {
         this.playlist = playlist;
     }
-
-    // Constructor, getters, setters, and methods for managing the MP3 player data
-    
 }

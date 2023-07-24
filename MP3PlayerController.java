@@ -1,3 +1,4 @@
+// connects the physical form to the action
 public class MP3PlayerController {
     private MP3PlayerModel model;
     private MP3PlayerView view;
@@ -21,6 +22,4 @@ public class MP3PlayerController {
         model.setCurrentSong(songName);
         view.showCurrentSong(songName);
     }
-
-    // Other methods to handle user interactions and model updates
 }

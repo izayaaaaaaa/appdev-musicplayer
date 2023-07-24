@@ -1,3 +1,4 @@
+// physical form
 import java.util.List;
 
 public class MP3PlayerView{
@@ -20,10 +21,4 @@ public class MP3PlayerView{
         // Display the playlist on the UI
 
     }
-
-    // Other methods to handle user interactions and display updates
-
-
-
-
 }
