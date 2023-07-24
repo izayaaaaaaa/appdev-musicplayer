@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -11,7 +13,7 @@ import javax.swing.JTable;
 public class MP3PlayerView extends JFrame{
     
     JPanel panel1, panel2, panelA, panelB, panelC, panelD;
-    JButton showPlayPause, showFastForward, showBacktrack, showNextSong, showPreviousSong;
+    JButton showPlayBtn, showPauseBtn, showFastForwardBtn, showBacktrackBtn, showNextSongBtn, showPreviousSongBtn;
     JTable showPlaylist;
     JScrollPane sp;
     JProgressBar pb;
@@ -48,16 +50,23 @@ public class MP3PlayerView extends JFrame{
         panelD = new JPanel();
         panelD.setBackground(Color.PINK);
 
-        showPreviousSong();
-            panelD.add(showPreviousSong);
-        showBacktrack();
-            panelD.add(showBacktrack);
-        showPlayPauseButton();
-            panelD.add(showPlayPause);
-        showFastForward();
-            panelD.add(showFastForward);
-        showNextSong();
-            panelD.add(showNextSong);
+        showPreviousSongButton();
+            panelD.add(showPreviousSongBtn);
+        showBacktrackButton();
+            panelD.add(showBacktrackBtn);
+        showPlayButton();
+            panelD.add(showPlayBtn);
+        showPlayBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // print something to the console
+                System.out.println("Play button clicked");
+            }
+        });
+        showFastForwardButton();
+            panelD.add(showFastForwardBtn);
+        showNextSongButton();
+            panelD.add(showNextSongBtn);
 
         panel1.add(panelD, c);
 
@@ -79,30 +88,34 @@ public class MP3PlayerView extends JFrame{
         // Display the current song on the UI
     }
 
-    public void showPlayPauseButton() {
+    public void showPlayButton() {
         // Display the play button on the UI
-        showPlayPause = new JButton("Play/Pause");
+        showPlayBtn = new JButton("Play");
     }
 
-    public void showFastForward(){
+    public void showPauseButton() {
+        showPauseBtn = new JButton("Pause");
+    }
+
+    public void showFastForwardButton(){
         //Display the fast forward button on the UI
-        showFastForward = new JButton("FastForward");
+        showFastForwardBtn = new JButton("FastForward");
 
     }
 
-    public void showBacktrack(){
+    public void showBacktrackButton(){
         //Display the backtrack button on the UI
-        showBacktrack = new JButton("Backtrack");
+        showBacktrackBtn = new JButton("Backtrack");
     }
 
-    public void showNextSong(){
+    public void showNextSongButton(){
         //Display the Next Song button on the UI
-        showNextSong = new JButton("Next Song");
+        showNextSongBtn = new JButton("Next Song");
     }
 
-    public void showPreviousSong(){
+    public void showPreviousSongButton(){
         //Display the Previous Song button on the UI
-        showPreviousSong = new JButton("Previous Song");
+        showPreviousSongBtn = new JButton("Previous Song");
     }
 
     public void showProgressBar(){

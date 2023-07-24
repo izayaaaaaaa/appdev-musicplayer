@@ -10,7 +10,7 @@ public class MainApp {
         // view.setSongSelectListener(controller::onSongSelected);
 
         // Display the initial UI
-        view.showPlayPauseButton();
-        view.showPlaylist(model.getPlaylist());
+        // view.showPlayPauseButton();
+        // view.showPlaylist(model.getPlaylist());
     }
 }

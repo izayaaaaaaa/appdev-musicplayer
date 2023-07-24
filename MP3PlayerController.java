@@ -8,20 +8,9 @@ public class MP3PlayerController {
         this.view = view;
     }
 
-    //Play Button
-    public void onPlayButtonClicked() {
-        model.setPlaying(true);
-        view.showPlayPauseButton();
+    public void onPlayBtnClicked() {
+        
     }
-
-    //Pause Button
-    public void onPauseButtonClicked() {
-        model.setPlaying(false);
-        view.showPlayPauseButton();
-    }
-
-    public void onSongSelected(String songName) {
-        model.setCurrentSong(songName);
-        view.showCurrentSong(songName);
-    }
+    
+    
 }
