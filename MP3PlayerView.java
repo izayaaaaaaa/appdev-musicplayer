@@ -1,12 +1,20 @@
-// physical form
 import java.awt.*;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class MP3PlayerView extends JFrame{
+    
     JPanel panel1, panel2, panelA, panelB, panelC, panelD;
+    JButton showPlay, showPause, showFastForward, showBacktrack, showNextSong, showPreviousSong;
+    JTable showPlaylist;
+    JScrollPane sp;
+    JProgressBar pb;
 
     public MP3PlayerView() {
         panel1 = new JPanel(new GridBagLayout());
@@ -40,6 +48,7 @@ public class MP3PlayerView extends JFrame{
         panelD = new JPanel();
         panelD.setBackground(Color.PINK);
         panel1.add(panelD, c);
+        panelD.add(showPlay);
 
 
         panel2 = new JPanel(new BorderLayout());
@@ -63,16 +72,55 @@ public class MP3PlayerView extends JFrame{
 
     public void showPlayButton() {
         // Display the play button on the UI
+        showPlay = new JButton("Play");
 
     }
 
     public void showPauseButton() {
         // Display the pause button on the UI
+        showPause = new JButton("Pause");
 
     }
+
+    public void showFastForward(){
+        //Display the fast forward button on the UI
+        showFastForward = new JButton("FastForward");
+
+    }
+
+    public void showBacktrack(){
+        //Display the backtrack button on the UI
+        showBacktrack = new JButton("Backtrack");
+    }
+
+    public void showNextSong(){
+        //Display the Next Song button on the UI
+        showNextSong = new JButton("Next Song");
+    }
+
+    public void showPreviousSong(){
+        //Display the Previous Song button on the UI
+        showPreviousSong = new JButton("Previous Song");
+    }
+
+    public void showProgressBar(){
+        //Display the Progress Bar on the UI
+
+        //CurrentSong Min and Max Duration
+        //JProgressbar(min, max)
+        pb = new JProgressBar(); //Pass as parameter for current song time duration
+    }
+
 
     public void showPlaylist(List<String> playlist) {
         // Display the playlist on the UI
-
+        showPlaylist = new JTable(); 
+        sp = new JScrollPane(showPlaylist);
     }
+
+    // Other methods to handle user interactions and display updates
+
+
+
+
 }
