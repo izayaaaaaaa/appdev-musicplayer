@@ -7,7 +7,7 @@ public class MP3PlayerController implements ActionListener {
   private MP3PlayerModel model;
   private MP3PlayerView view;
 
-  Song currentSong = new Song("Anti Hero", "Taylor Swift - Anti-Hero (Official Music Video).wav");
+ 
   
   public MP3PlayerController(MP3PlayerModel model, MP3PlayerView view) {
     this.model = model;
@@ -16,6 +16,9 @@ public class MP3PlayerController implements ActionListener {
   
   @Override
   public void actionPerformed(ActionEvent e) {
+    
+    Song currentSong = new Song("Anti Hero", "Taylor Swift - Anti-Hero (Official Music Video).wav");
+
     if (e.getSource() == view.playBtn) {
 
       System.out.println("Play button clicked");
