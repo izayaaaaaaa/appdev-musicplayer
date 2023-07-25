@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 public class MP3PlayerController implements ActionListener {
   private MP3PlayerModel model;
   private MP3PlayerView view;
+
+  Song currentSong = new Song("Anti Hero", "Taylor Swift - Anti-Hero (Official Music Video).wav");
   
   public MP3PlayerController(MP3PlayerModel model, MP3PlayerView view) {
     this.model = model;
@@ -17,18 +19,12 @@ public class MP3PlayerController implements ActionListener {
     if (e.getSource() == view.playBtn) {
 
       System.out.println("Play button clicked");
+      // output to console the current song title and path
+      System.out.println("Current song: " + currentSong.getSong() + "; " + currentSong.getSongPath());
       
-      model.playMusic();
-
-      // Logic for handling the Play button click
-      // if (model.isPlaying()) {
-        //     // If currently playing, pause the playback
-        //     model.setPlaying(false);
-        //     view.playBtn.setText("Play"); // Change button text to "Play"
-        // } else {
-          //     // If currently paused or stopped, start playback
-          //     model.setPlaying(true);
-          //     view.playBtn.setText("Pause"); // Change button text to "Pause"
+      
+      
+      model.playMusic(currentSong);
     }
   }
 }

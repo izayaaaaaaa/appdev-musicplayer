@@ -5,6 +5,8 @@ public class MainApp {
     MP3PlayerView view = new MP3PlayerView(model);
     // show gui through a view class method (not the constructor)
 
-    Song s = new Song("song", "songPath");
+    
+    
+    
   }
 }

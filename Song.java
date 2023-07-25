@@ -1,16 +1,20 @@
+import java.io.File;
+import java.io.IOException;
+import javax.sound.sampled.*;
+
 import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Song {
-  private
-
-  private String song;
+  private String songTitle;
   private String songPath;
   private AudioInputStream songStream;
   private Clip songClip;
 
-  public Song(String song, String songPath) {
-    this.song = song;
+  public Song(String songTitle, String songPath) {
+    this.songTitle = songTitle;
     this.songPath = songPath;
     
     try {
@@ -23,12 +27,11 @@ public class Song {
     }
   }
 
-  // implement the getter and setter of song, songPath, songStream, and songClip
   public String getSong() {
-    return song;
+    return songTitle;
   }
   public void setSong(String song) {
-    this.song = song;
+    this.songTitle = song;
   }
 
   public String getSongPath() {
@@ -41,14 +44,14 @@ public class Song {
   public AudioInputStream getSongStream() {
     return songStream;
   }
-  public void setSongStream(AudioInputStream songStream) {
-    this.songStream = songStream;
+  public void setSongStream() throws UnsupportedAudioFileException, IOException {
+    songStream = AudioSystem.getAudioInputStream(new File(songPath).getAbsoluteFile());
   }
-
+  
   public Clip getSongClip() {
     return songClip;
   }
-  public void setSongClip(Clip songClip) {
-    this.songClip = songClip;
+  public void setSongClip() throws LineUnavailableException {
+    songClip = AudioSystem.getClip();
   }
 }
