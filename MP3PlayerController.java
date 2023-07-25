@@ -26,5 +26,30 @@ public class MP3PlayerController implements ActionListener {
       
       model.playMusic(currentSong);
     }
+    else if (e.getSource() == view.pauseBtn) {
+            System.out.println("Pause button clicked");
+            //Code for functionality below
+
+    }
+    else if (e.getSource() == view.fastForwardBtn) {
+        System.out.println("Fast forward button clicked");
+        //Code for functionality below
+        
+    }
+    else if (e.getSource() == view.backtrackBtn) {
+        System.out.println("Backtrack button clicked");
+        //Code for functionality below
+        
+    }
+    else if (e.getSource() == view.nextSongBtn) {
+        System.out.println("Next song button clicked");
+        //Code for functionality below
+        
+    }
+    else if (e.getSource() == view.previousSongBtn) {
+        System.out.println("Previous song button clicked");
+        //Code for functionality below
+        
+    }
   }
 }
