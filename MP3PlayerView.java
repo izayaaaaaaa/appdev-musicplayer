@@ -17,36 +17,44 @@ public class MP3PlayerView extends JFrame{
   
   public MP3PlayerView(MP3PlayerModel model) {
     panel1 = new JPanel(new GridBagLayout());
+    panel1 = new JPanel(new GridBagLayout());
     panel1.setBackground(Color.BLUE);
     GridBagConstraints c = new GridBagConstraints();
     c.weightx = 1;
     c.weighty = 1;
     c.fill = GridBagConstraints.BOTH;
-    
-    
+
     c.gridx = 0;
     c.gridy = 0;
     panelA = new JPanel();
     panelA.setBackground(Color.GREEN);
     panel1.add(panelA, c);
-    
+
     c.gridx = 0;
     c.gridy = 1;
     panelB = new JPanel();
     panelB.setBackground(Color.YELLOW);
     panel1.add(panelB, c);
-    
+
     c.gridx = 0;
     c.gridy = 2;
     panelC = new JPanel();
     panelC.setBackground(Color.ORANGE);
     panel1.add(panelC, c);
-    
+
     c.gridx = 0;
     c.gridy = 3;
     panelD = new JPanel();
     panelD.setBackground(Color.PINK);
-    
+
+    // Initialize buttons
+    playBtn = new JButton("Play");
+    pauseBtn = new JButton("Pause");
+    fastForwardBtn = new JButton("FastForward");
+    backtrackBtn = new JButton("Backtrack");
+    nextSongBtn = new JButton("Next Song");
+    previousSongBtn = new JButton("Previous Song");
+
     showPreviousSongButton();
     panelD.add(previousSongBtn);
     showBacktrackButton();
@@ -54,20 +62,23 @@ public class MP3PlayerView extends JFrame{
     showPlayButton();
     panelD.add(playBtn);
     playBtn.addActionListener(new MP3PlayerController(model, this));
+    showPauseButton();
+    panelD.add(pauseBtn);
+    pauseBtn.addActionListener(new MP3PlayerController(model, this));
     showFastForwardButton();
     panelD.add(fastForwardBtn);
     showNextSongButton();
     panelD.add(nextSongBtn);
-    
+
     panel1.add(panelD, c);
-    
+
     panel2 = new JPanel(new BorderLayout());
     panel2.setBackground(Color.RED);
-    
+
     this.setLayout(new GridLayout(1, 2));
     this.add(panel1);
     this.add(panel2);
-    
+
     this.setTitle("MP3 Player");
     this.setSize(500, 500);
     this.setResizable(false);

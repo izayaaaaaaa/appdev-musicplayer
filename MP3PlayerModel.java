@@ -13,8 +13,10 @@ public class MP3PlayerModel {
   Song currentSong;
 
   public void pauseMusic(Song s) {
+    if (s.getSongClip().isRunning()) {
       currentFrame = s.getSongClip().getMicrosecondPosition();
       s.getSongClip().stop();
+    }
   } 
 
   public void playMusic(Song s) {
@@ -30,7 +32,7 @@ public class MP3PlayerModel {
       else if(songSelected){ 
         s.getSongClip().close();   
         resetAudioStream(s);
-        s.getSongClip().setMicrosecondPosition(0L);
+        s.getSongClip().setMicrosecondPosition(currentFrame);
       }
 
     } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
