@@ -15,7 +15,8 @@ public class MP3PlayerView extends JFrame{
   JScrollPane sp;
   JProgressBar pb;
   
-  public MP3PlayerView(MP3PlayerModel model) {
+  
+  public MP3PlayerView() {
     panel1 = new JPanel(new GridBagLayout());
     panel1 = new JPanel(new GridBagLayout());
     panel1.setBackground(Color.BLUE);
@@ -48,12 +49,12 @@ public class MP3PlayerView extends JFrame{
     panelD.setBackground(Color.PINK);
 
     // Initialize buttons
-    playBtn = new JButton("Play");
-    pauseBtn = new JButton("Pause");
-    fastForwardBtn = new JButton("FastForward");
-    backtrackBtn = new JButton("Backtrack");
-    nextSongBtn = new JButton("Next Song");
-    previousSongBtn = new JButton("Previous Song");
+    // playBtn = new JButton("Play");
+    // pauseBtn = new JButton("Pause");
+    // fastForwardBtn = new JButton("FastForward");
+    // backtrackBtn = new JButton("Backtrack");
+    // nextSongBtn = new JButton("Next Song");
+    // previousSongBtn = new JButton("Previous Song");
 
     showPreviousSongButton();
     panelD.add(previousSongBtn);
@@ -61,10 +62,10 @@ public class MP3PlayerView extends JFrame{
     panelD.add(backtrackBtn);
     showPlayButton();
     panelD.add(playBtn);
-    playBtn.addActionListener(new MP3PlayerController(model, this));
+    // playBtn.addActionListener(new MP3PlayerController(model, this));
     showPauseButton();
     panelD.add(pauseBtn);
-    pauseBtn.addActionListener(new MP3PlayerController(model, this));
+    // pauseBtn.addActionListener(new MP3PlayerController(model, this));
     showFastForwardButton();
     panelD.add(fastForwardBtn);
     showNextSongButton();
@@ -93,10 +94,12 @@ public class MP3PlayerView extends JFrame{
   public void showPlayButton() {
     // Display the play button on the UI
     playBtn = new JButton("Play");
+    // playBtn.addActionListener(new MP3PlayerController(model, this));
   }
   
   public void showPauseButton() {
     pauseBtn = new JButton("Pause");
+    // pauseBtn.addActionListener(new MP3PlayerController(model, this));
   }
   
   public void showFastForwardButton(){

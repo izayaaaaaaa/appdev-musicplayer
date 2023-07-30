@@ -7,7 +7,6 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class MP3PlayerModel {
-
   Boolean songSelected = false,
           songPaused = false;
   Long currentFrame;

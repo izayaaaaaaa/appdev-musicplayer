@@ -3,7 +3,9 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MP3PlayerController implements ActionListener {
+// import javax.swing.Action;
+
+public class MP3PlayerController {
   private MP3PlayerModel model;
   private MP3PlayerView view;
 
@@ -13,52 +15,51 @@ public class MP3PlayerController implements ActionListener {
     this.model = model;
     this.view = view;
 
-    view.playBtn.addActionListener(this);
-    view.pauseBtn.addActionListener(this);
-    view.fastForwardBtn.addActionListener(this);
-    view.backtrackBtn.addActionListener(this);
-    view.nextSongBtn.addActionListener(this);
-    view.previousSongBtn.addActionListener(this);
+    // syncing the buttons created in the view to the listeners found in controller
+    view.playBtn.addActionListener(new mainListener());
+    view.pauseBtn.addActionListener(new mainListener());
+    view.fastForwardBtn.addActionListener(new mainListener());
+    view.backtrackBtn.addActionListener(new mainListener());
+    view.nextSongBtn.addActionListener(new mainListener());
+    view.previousSongBtn.addActionListener(new mainListener());
   }
   
-  @Override
-  public void actionPerformed(ActionEvent e) {
+  class mainListener implements ActionListener {
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
-    if (e.getSource() == view.playBtn) {
-
-      System.out.println("Play button clicked");
-      // output to console the current song title and path
-      System.out.println("Current song: " + currentSong.getSong() + "; " + currentSong.getSongPath());
-      
-      
-      
-      model.playMusic(currentSong);
-    }
-    else if (e.getSource() == view.pauseBtn) {
-            System.out.println("Pause button clicked");
-            //Code for functionality below
-            model.pauseMusic(currentSong);
-
-    }
-    else if (e.getSource() == view.fastForwardBtn) {
+      if (e.getSource() == view.playBtn) {
+        System.out.println("Play button clicked");
+        // output to console the current song title and path
+        System.out.println("Current song: " + currentSong.getSong() + "; " + currentSong.getSongPath());
+        model.playMusic(currentSong);
+      }
+      else if (e.getSource() == view.pauseBtn) {
+        System.out.println("Pause button clicked");
+        model.pauseMusic(currentSong);
+      }
+      else if (e.getSource() == view.fastForwardBtn) {
         System.out.println("Fast forward button clicked");
         //Code for functionality below
-        
-    }
-    else if (e.getSource() == view.backtrackBtn) {
+      }
+      else if (e.getSource() == view.backtrackBtn) {
         System.out.println("Backtrack button clicked");
         //Code for functionality below
-        
-    }
-    else if (e.getSource() == view.nextSongBtn) {
+      }
+      else if (e.getSource() == view.nextSongBtn) {
         System.out.println("Next song button clicked");
         //Code for functionality below
-        
-    }
-    else if (e.getSource() == view.previousSongBtn) {
+      }
+      else if (e.getSource() == view.previousSongBtn) {
         System.out.println("Previous song button clicked");
         //Code for functionality below
-        
+      }
     }
+  }
+  
+
+  public void updateView() {
+    // update view
+    
   }
 }
