@@ -48,24 +48,14 @@ public class MP3PlayerView extends JFrame{
     panelD = new JPanel();
     panelD.setBackground(Color.PINK);
 
-    // Initialize buttons
-    // playBtn = new JButton("Play");
-    // pauseBtn = new JButton("Pause");
-    // fastForwardBtn = new JButton("FastForward");
-    // backtrackBtn = new JButton("Backtrack");
-    // nextSongBtn = new JButton("Next Song");
-    // previousSongBtn = new JButton("Previous Song");
-
     showPreviousSongButton();
     panelD.add(previousSongBtn);
     showBacktrackButton();
     panelD.add(backtrackBtn);
     showPlayButton();
     panelD.add(playBtn);
-    // playBtn.addActionListener(new MP3PlayerController(model, this));
     showPauseButton();
     panelD.add(pauseBtn);
-    // pauseBtn.addActionListener(new MP3PlayerController(model, this));
     showFastForwardButton();
     panelD.add(fastForwardBtn);
     showNextSongButton();
@@ -92,39 +82,31 @@ public class MP3PlayerView extends JFrame{
   }
   
   public void showPlayButton() {
-    // Display the play button on the UI
     playBtn = new JButton("Play");
-    // playBtn.addActionListener(new MP3PlayerController(model, this));
   }
   
   public void showPauseButton() {
     pauseBtn = new JButton("Pause");
-    // pauseBtn.addActionListener(new MP3PlayerController(model, this));
   }
   
   public void showFastForwardButton(){
-    //Display the fast forward button on the UI
     fastForwardBtn = new JButton("FastForward");
     
   }
   
   public void showBacktrackButton(){
-    //Display the backtrack button on the UI
     backtrackBtn = new JButton("Backtrack");
   }
   
   public void showNextSongButton(){
-    //Display the Next Song button on the UI
     nextSongBtn = new JButton("Next Song");
   }
   
   public void showPreviousSongButton(){
-    //Display the Previous Song button on the UI
     previousSongBtn = new JButton("Previous Song");
   }
   
   public void showProgressBar(){
-    //Display the Progress Bar on the UI
     
     //CurrentSong Min and Max Duration
     //JProgressbar(min, max)
@@ -133,7 +115,6 @@ public class MP3PlayerView extends JFrame{
   
   
   public void showPlaylist(List<String> playlist) {
-    // Display the playlist on the UI
     showPlaylist = new JTable(); 
     sp = new JScrollPane(showPlaylist);
   }
