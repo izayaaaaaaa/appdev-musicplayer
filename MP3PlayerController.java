@@ -7,17 +7,22 @@ public class MP3PlayerController implements ActionListener {
   private MP3PlayerModel model;
   private MP3PlayerView view;
 
- 
+  Song currentSong = new Song("Anti Hero", "Taylor Swift - Anti-Hero (Official Music Video).wav");
   
   public MP3PlayerController(MP3PlayerModel model, MP3PlayerView view) {
     this.model = model;
     this.view = view;
+
+    view.playBtn.addActionListener(this);
+    view.pauseBtn.addActionListener(this);
+    view.fastForwardBtn.addActionListener(this);
+    view.backtrackBtn.addActionListener(this);
+    view.nextSongBtn.addActionListener(this);
+    view.previousSongBtn.addActionListener(this);
   }
   
   @Override
   public void actionPerformed(ActionEvent e) {
-    
-    Song currentSong = new Song("Anti Hero", "Taylor Swift - Anti-Hero (Official Music Video).wav");
 
     if (e.getSource() == view.playBtn) {
 
@@ -32,6 +37,7 @@ public class MP3PlayerController implements ActionListener {
     else if (e.getSource() == view.pauseBtn) {
             System.out.println("Pause button clicked");
             //Code for functionality below
+            model.pauseMusic(currentSong);
 
     }
     else if (e.getSource() == view.fastForwardBtn) {
