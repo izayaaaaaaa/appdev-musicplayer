@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -14,6 +15,7 @@ public class MP3PlayerView extends JFrame{
   JPanel panel1, panel2, panelA, panelB, panelC, panelD;
   JButton playBtn, pauseBtn, fastForwardBtn, backtrackBtn, nextSongBtn, previousSongBtn;
   JTable showPlaylist;
+  JTable songList;
   JScrollPane sp;
   JProgressBar pb;
   
@@ -50,18 +52,12 @@ public class MP3PlayerView extends JFrame{
     panelD = new JPanel();
     panelD.setBackground(Color.PINK);
 
-    showPreviousSongButton();
-    panelD.add(previousSongBtn);
-    showBacktrackButton();
-    panelD.add(backtrackBtn);
-    showPlayButton();
-    panelD.add(playBtn);
-    showPauseButton();
-    panelD.add(pauseBtn);
-    showFastForwardButton();
-    panelD.add(fastForwardBtn);
-    showNextSongButton();
-    panelD.add(nextSongBtn);
+    createPreviousSongButton();
+    createBacktrackButton();
+    createPlayButton();
+    createPauseButton();
+    createFastForwardButton();
+    createNextSongButton();
 
     panel1.add(panelD, c);
 
@@ -79,44 +75,49 @@ public class MP3PlayerView extends JFrame{
     this.setVisible(true);
   }
   
-  public void showCurrentSong(String songName) {
+  public void createPlayButton() {
     // Display the current song on the UI
-  }
-  
-  public void showPlayButton() {
     playBtn = new JButton("Play");
+    panelD.add(playBtn);
   }
   
-  public void showPauseButton() {
+  public void createPauseButton() {
     pauseBtn = new JButton("Pause");
+    panelD.add(pauseBtn);
   }
   
-  public void showFastForwardButton(){
+  public void createFastForwardButton(){
     fastForwardBtn = new JButton("FastForward");
-    
+    panelD.add(fastForwardBtn);
   }
   
-  public void showBacktrackButton(){
+  public void createBacktrackButton(){
     backtrackBtn = new JButton("Backtrack");
+    panelD.add(backtrackBtn);
   }
   
-  public void showNextSongButton(){
-    nextSongBtn = new JButton("Next Song");
+  public void createNextSongButton(){
+    nextSongBtn = new JButton("Next");
+    panelD.add(nextSongBtn);
   }
   
-  public void showPreviousSongButton(){
-    previousSongBtn = new JButton("Previous Song");
+  public void createPreviousSongButton(){
+    previousSongBtn = new JButton("Previous");
+    panelD.add(previousSongBtn);
+  }
+
+  public void createCurrentSong(String songName){
+    JLabel currentSong = new JLabel(songName);
+    panelD.add(currentSong);
   }
   
-  public void showProgressBar(){
-    
+  public void createProgressBar(){
     //CurrentSong Min and Max Duration
     //JProgressbar(min, max)
     pb = new JProgressBar(); //Pass as parameter for current song time duration
   }
   
-  
-  public void showPlaylist(List<String> playlist) {
+  public void createPlaylist(List<String> playlist) {
     showPlaylist = new JTable(); 
     sp = new JScrollPane(showPlaylist);
   }

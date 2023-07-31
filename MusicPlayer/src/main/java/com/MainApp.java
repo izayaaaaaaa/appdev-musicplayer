@@ -7,6 +7,6 @@ public class MainApp {
     MP3PlayerController controller = new MP3PlayerController(model, view);
     
     // update view
-    controller.updateView();
+    //controller.updateView();
   }
 }

@@ -106,7 +106,7 @@ public class MP3PlayerModel {
 
         s = new Song();
 
-        if (!songSelected && s != null) {  
+        if (!songSelected) {  
       
           s.setSongTitle("Anti Hero");
           s.setSongPath("Taylor Swift - Anti-Hero (Official Music Video).wav");
@@ -232,6 +232,34 @@ public class MP3PlayerModel {
       emf.close();
     }
 
+  }
+
+  public void fastForwardMusic(Song s) {
+    if (s != null) {
+      // long currentPosition = s.getSongClip().getMicrosecondPosition();
+      // long newPosition = currentPosition + 1000000; // Adjust the value as needed for the fast forward speed
+      // if (newPosition > s.getSongClip().getMicrosecondLength()) {
+      //   newPosition = s.getSongClip().getMicrosecondLength(); // Make sure we don't go beyond the song length
+      // }
+      // s.getSongClip().setMicrosecondPosition(newPosition);
+    }
+  }
+
+  public void backtrackMusic(Song s) {
+    if (s != null) {
+      // long currentPosition = s.getSongClip().getMicrosecondPosition();
+      // long newPosition = currentPosition - 1000000; // Adjust the value as needed for the backtrack speed
+      // if (newPosition < 0) {
+      //   newPosition = 0; // Make sure we don't go before the start of the song
+      // }
+      // s.getSongClip().setMicrosecondPosition(newPosition);
+    }
+  }
+
+  public void stop(Song s) {
+    if (s != null) {
+      //s.getSongClip().stop();
+    }
   }
 
 }
