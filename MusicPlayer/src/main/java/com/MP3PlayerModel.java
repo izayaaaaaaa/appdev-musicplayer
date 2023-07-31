@@ -322,10 +322,76 @@ public class MP3PlayerModel {
     }
   }
 
+  public void nextSongMusic(){
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
+    EntityManager em = emf.createEntityManager();
+
+    try {
+
+      songClip.stop();
+    
+      em.getTransaction().begin();
+
+      s_id = s_id + 1;
+
+      s = em.find(Song.class, s_id);
+
+      AudioProcess();
+
+      songClip.start();
+
+      
+
+    } catch (Exception e) {
+      // TODO: handle exception
+      if(em.getTransaction() != null){
+        em.getTransaction().rollback();
+      }
+
+      e.printStackTrace();
+    } finally {
+      em.close();
+      emf.close();
+    }
+  }
+
+  public void previousSongMusic(){
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
+    EntityManager em = emf.createEntityManager();
+
+    try {
+
+      songClip.stop();
+    
+      em.getTransaction().begin();
+
+      s_id = s_id - 1;
+
+      s = em.find(Song.class, s_id);
+
+      AudioProcess();
+
+      songClip.start();
+
+
+    } catch (Exception e) {
+      // TODO: handle exception
+      if(em.getTransaction() != null){
+        em.getTransaction().rollback();
+      }
+
+      e.printStackTrace();
+    } finally {
+      em.close();
+      emf.close();
+    }
+  }
+
   public void stop() {
     if (s != null) {
       //s.getSongClip().stop();
     }
   }
+
 
 }

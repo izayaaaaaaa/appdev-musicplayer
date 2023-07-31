@@ -1,5 +1,6 @@
 package com;
 
+import javax.management.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -26,6 +27,8 @@ public class PersistSongs {
         s1.setSongPath("MusicPlayer/src/main/java/com/songs/Anti-Hero - Taylor Swift.wav");
         s2.setSongPath("MusicPlayer/src/main/java/com/songs/Curious - Hayley Kiyoko.wav");
         s3.setSongPath("MusicPlayer/src/main/java/com/songs/Sex (with my ex) - Fletcher.wav");
+
+        
 
         em.persist(s1);
         em.persist(s2);

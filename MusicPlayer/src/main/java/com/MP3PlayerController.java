@@ -73,6 +73,8 @@ public class MP3PlayerController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == view.nextSongBtn) {
+        
+        model.nextSongMusic();
         // model.stop(currentSong);
         // model.songSelected = false;
 
@@ -90,8 +92,10 @@ public class MP3PlayerController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == view.previousSongBtn) {
+
+        model.previousSongMusic();
         //model.stop(currentSong);
-        model.songSelected = false;
+       //model.songSelected = false;
 
         //currentSongIndex--;
         //if (currentSongIndex < 0) {
