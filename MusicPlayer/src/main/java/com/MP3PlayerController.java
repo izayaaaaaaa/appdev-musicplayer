@@ -11,7 +11,7 @@ public class MP3PlayerController {
   private MP3PlayerModel model;
   private MP3PlayerView view;
 
-  Song currentSong = new Song("Anti Hero", "Taylor Swift - Anti-Hero (Official Music Video).wav");
+  Song currentSong = new Song();
   
   public MP3PlayerController(MP3PlayerModel model, MP3PlayerView view) {
     this.model = model;
@@ -33,12 +33,12 @@ public class MP3PlayerController {
       if (e.getSource() == view.playBtn) {
         System.out.println("Play button clicked");
         // output to console the current song title and path
-        System.out.println("Current song: " + currentSong.getSong() + "; " + currentSong.getSongPath());
+        //System.out.println("Current song: " + currentSong.getSong() + "; " + currentSong.getSongPath());
         model.playMusic(currentSong);
       }
       else if (e.getSource() == view.pauseBtn) {
         System.out.println("Pause button clicked");
-        model.pauseMusic(currentSong);
+        //model.pauseMusic(currentSong);
       }
       else if (e.getSource() == view.fastForwardBtn) {
         System.out.println("Fast forward button clicked");
