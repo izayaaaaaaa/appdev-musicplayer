@@ -34,11 +34,11 @@ public class MP3PlayerController {
         System.out.println("Play button clicked");
         // output to console the current song title and path
         //System.out.println("Current song: " + currentSong.getSong() + "; " + currentSong.getSongPath());
-        model.playMusic(currentSong);
+        model.playMusic();
       }
       else if (e.getSource() == view.pauseBtn) {
         System.out.println("Pause button clicked");
-        //model.pauseMusic(currentSong);
+        model.pauseMusic();
       }
       else if (e.getSource() == view.fastForwardBtn) {
         System.out.println("Fast forward button clicked");

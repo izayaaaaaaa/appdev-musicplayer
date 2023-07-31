@@ -27,12 +27,13 @@ public class MP3PlayerModel {
           songPaused = false;
   Long currentFrame;
   Song currentSong;
+  String sname;
 
-  private AudioInputStream songStream;
-  private Clip songClip;
-  // private Song s;
-
-
+  public Song s;
+  public AudioInputStream songStream ;
+  public Clip songClip;
+  
+  
   /*
    * PAUSE MUSIC
    */
@@ -45,17 +46,62 @@ public class MP3PlayerModel {
   //   }
   // } 
 
-  /*
-   * PLAY MUSIC
-   */
-
-  public void playMusic(Song s) {
-    System.out.println("playMusic model method");
+  public void pauseMusic(){
 
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
     EntityManager em = emf.createEntityManager();
 
-    if (!songSelected && s != null) {  
+    try {
+      em.getTransaction().begin();
+
+      s = em.find(Song.class, 1);
+
+      System.out.println("Song ID:" + s.getId());
+
+      songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
+      songClip = AudioSystem.getClip();
+      songClip.open(songStream);
+      //songClip.stop();
+      //songClip.stop();
+
+      if (s != null && songClip.isRunning()) {
+
+        currentFrame = songClip.getMicrosecondPosition();
+        System.out.println("Current Frame is " + currentFrame);
+
+        songClip.stop();
+        songPaused = true;
+
+      }
+
+      //em.persist(s);
+      em.getTransaction().commit();
+    } catch (Exception e) {
+      // TODO: handle exception
+
+      if(em.getTransaction() != null){
+        em.getTransaction().rollback();
+      }
+
+      e.printStackTrace();
+    } finally {
+      em.close();
+      emf.close();
+    }
+
+    
+  }
+
+
+  /*
+   * PLAY MUSIC
+   */
+
+  public void playMusic() {
+    System.out.println("playMusic model method");
+
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
+    EntityManager em = emf.createEntityManager();
 
       try {
 
@@ -63,58 +109,156 @@ public class MP3PlayerModel {
 
         s = new Song();
 
-        s.setSongTitle("heey");
-        s.setSongPath("heey");
-        
+        if (!songSelected && s != null) {  
+      
+          s.setSongTitle("Anti Hero");
+          s.setSongPath("Taylor Swift - Anti-Hero (Official Music Video).wav");
+          
+          System.out.println("Song Path: " + s.getSongPath());
+          songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
+          songClip = AudioSystem.getClip();
+          songClip.open(songStream);
+
+          songClip.start();
+          songSelected = true;  // Song has been selected
+          songPaused = false;   // Song is not paused
+
+        } else if (songSelected && songPaused && s != null){
+          resumePlay();
+        }
+
         em.persist(s);
-        
         em.getTransaction().commit();
 
       } catch (Exception ex) {
 
         if(em.getTransaction() != null){
-          em.getTransaction().rollback();
-        }
 
-        ex.printStackTrace();
+          em.getTransaction().rollback();
+
+        }
+          ex.printStackTrace();
 
       } finally {
         em.close();
         emf.close();
       }
-    
-      // s.getSongClip().start();  // Start playing the song selected
-      // songSelected = true;  // Song has been selected
-      // songPaused = false;   // Song is not paused
-    } else if (songSelected && songPaused && s != null) { 
-      //resumePlay(s);
-    }
+
   }
 
   /*
    * RESUME MUSIC
    */
 
-  // public void resumePlay(Song s) {
-  //   if (s != null) {
-  //     try {
-  //       s.getSongClip().close();
-  //       resetAudioStream(s);
-  //       s.getSongClip().setMicrosecondPosition(currentFrame);
-  //       s.getSongClip().start(); // Start playing the song after resuming
-  //       songPaused = false;   // Song is not paused anymore
+  public void resumePlay() {
 
-  //     } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-  //       System.out.println("resumePlay() error");
-  //       e1.printStackTrace();
-  //     }
-  //   }
-  // }
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
+    EntityManager em = emf.createEntityManager();
+
+    try {
+
+      em.getTransaction().begin();
+
+      s = em.find(Song.class, 1);
+
+      if(s != null){
+        songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
+        songClip = AudioSystem.getClip();
+        songClip.open(songStream);
+      
+        try {
+          songClip.close();
+          //resetAudioStream();
+          songClip.setMicrosecondPosition(currentFrame);
+          songClip.open(songStream);
+          songClip.start();
+          songPaused = false;
+          
+          
+        } catch (IOException | LineUnavailableException e1) {
+
+          System.out.println("resumePlay() error");
+
+          e1.printStackTrace();
+
+        }
+
+      }
+
+      //em.persist(s);
+      em.getTransaction().commit();
+      
+    } catch (Exception e) {
+
+        if(em.getTransaction() != null){
+
+          em.getTransaction().rollback();
+
+        }
+
+        e.printStackTrace();
+
+    } finally {
+      em.close();
+      emf.close();
+    }
+
+
+    // if (s != null) {
+    //   try {
+    //     s.getSongClip().close();
+    //     resetAudioStream(s);
+    //     s.getSongClip().setMicrosecondPosition(currentFrame);
+    //     s.getSongClip().start(); // Start playing the song after resuming
+    //     songPaused = false;   // Song is not paused anymore
+
+    //   } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+    //     System.out.println("resumePlay() error");
+    //     e1.printStackTrace();
+    //   }
+    // }
+  }
 
   /*
    * RESET AUDIO STREAM MUSIC
    */
   
+  public void resetAudioStream(){
+
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
+    EntityManager em = emf.createEntityManager();
+
+    try {
+      
+      em.getTransaction().begin();
+
+      s = em.find(Song.class, 1);
+
+      if (s != null){
+        songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
+        songClip = AudioSystem.getClip();
+        songClip.open(songStream);
+      }
+
+      //em.persist(s);
+      em.getTransaction().commit();
+
+
+    } catch (Exception e) {
+      // TODO: handle exception
+      if(em.getTransaction() != null){
+          em.getTransaction().rollback();
+      }
+
+      e.printStackTrace();
+
+    } finally {
+      em.close();
+      emf.close();
+    }
+
+  }
+
   // public void resetAudioStream(Song s) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
   //   if (s != null) {
   //     s.setSongStream();
