@@ -12,8 +12,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 public class MP3PlayerView extends JFrame{
-  JPanel panel1, panel2, panelA, panelB, panelC, panelD;
+  JPanel panel1, panel2, songListPanel, panelA, panelB, panelC, panelD;
   JButton playBtn, pauseBtn, fastForwardBtn, backtrackBtn, nextSongBtn, previousSongBtn;
+  JTable songList;
   JTable showPlaylist;
   JScrollPane sp;
   JProgressBar pb;
@@ -61,6 +62,11 @@ public class MP3PlayerView extends JFrame{
 
     panel2 = new JPanel(new BorderLayout());
     panel2.setBackground(Color.RED);
+
+    // put the song list here
+    songListPanel = new JPanel();
+    songList = new JTable();
+    
 
     this.setLayout(new GridLayout(1, 2));
     this.add(panel1);

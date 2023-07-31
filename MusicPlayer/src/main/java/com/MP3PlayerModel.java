@@ -13,7 +13,6 @@ public class MP3PlayerModel {
   private Song s;
 
   public void pauseMusic(Song s) {
-    System.out.println("pauseMusic model method");
     if (s != null && s.getSongClip().isRunning()) {
       currentFrame = s.getSongClip().getMicrosecondPosition();
       s.getSongClip().stop();
@@ -22,12 +21,14 @@ public class MP3PlayerModel {
   } 
 
   public void playMusic(Song s) {
-    System.out.println("playMusic model method");
-    if (!songSelected && s != null) {  
+    if (!songSelected) { 
+      s.getSongClip().setMicrosecondPosition(0); 
       s.getSongClip().start();  // Start playing the song selected
       songSelected = true;  // Song has been selected
       songPaused = false;   // Song is not paused
-    } else if (songSelected && songPaused && s != null) { 
+    }
+    
+    else if (songSelected && songPaused && s != null) { 
       resumePlay(s);
     }
   }
@@ -50,7 +51,6 @@ public class MP3PlayerModel {
   }
   
   public void resetAudioStream(Song s) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-    System.out.println("resetAudioStream model method");
     if (s != null) {
       s.setSongStream();
       s.getSongClip().open(s.getSongStream());
@@ -58,7 +58,6 @@ public class MP3PlayerModel {
   }
 
   public void fastForwardMusic(Song s) {
-    System.out.println("fastForwardMusic model method");
     if (s != null) {
       long currentPosition = s.getSongClip().getMicrosecondPosition();
       long newPosition = currentPosition + 1000000; // Adjust the value as needed for the fast forward speed
@@ -70,7 +69,6 @@ public class MP3PlayerModel {
   }
 
   public void backtrackMusic(Song s) {
-    System.out.println("backtrackMusic model method");
     if (s != null) {
       long currentPosition = s.getSongClip().getMicrosecondPosition();
       long newPosition = currentPosition - 1000000; // Adjust the value as needed for the backtrack speed
@@ -80,4 +78,11 @@ public class MP3PlayerModel {
       s.getSongClip().setMicrosecondPosition(newPosition);
     }
   }
+
+  public void stop(Song s) {
+    if (s != null) {
+      s.getSongClip().stop();
+    }
+  }
+
 }

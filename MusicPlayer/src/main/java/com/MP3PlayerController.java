@@ -1,4 +1,6 @@
 // connects the physical form to the action
+
+// bug: next/previous is working but when the next song is clicked, the timestamp is not recent and still plays on the last moment it played on
 package com;
 
 import java.awt.event.ActionEvent;
@@ -30,11 +32,11 @@ public class MP3PlayerController {
     view.pauseBtn.setVisible(false);
 
     playlist = new ArrayList<>();
-    playlist.add(new Song("Anti Hero", "Taylor Swift - Anti-Hero (Official Music Video).wav"));
-    playlist.add(new Song("Curious", "Curious - Hayley Kiyoko.wav" ));
-    playlist.add(new Song("Sex (with my ex)", "Sex (with my ex) - Fletcher.wav"));
+    playlist.add(new Song("Anti Hero", "MusicPlayer/src/main/java/com/songs/Anti-Hero - Taylor Swift.wav"));
+    playlist.add(new Song("Curious", "MusicPlayer/src/main/java/com/songs/Curious - Hayley Kiyoko.wav" ));
+    playlist.add(new Song("Sex (with my ex)", "MusicPlayer/src/main/java/com/songs/Sex (with my ex) - Fletcher.wav"));
   
-    currentSongIndex = 0;
+    currentSongIndex = 1;
     currentSong = playlist.get(currentSongIndex);
   }
 
@@ -42,7 +44,6 @@ public class MP3PlayerController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == view.playBtn) {
-        System.out.println("Play button clicked");
         view.playBtn.setVisible(false);
         view.pauseBtn.setVisible(true);
         model.playMusic(currentSong);
@@ -54,7 +55,6 @@ public class MP3PlayerController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == view.pauseBtn) {
-        System.out.println("Pause button clicked");
         view.playBtn.setVisible(true);
         view.pauseBtn.setVisible(false);
         model.pauseMusic(currentSong);
@@ -66,7 +66,6 @@ public class MP3PlayerController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == view.fastForwardBtn) {
-        System.out.println("Fast forward button clicked");
         model.fastForwardMusic(currentSong);
       }
     }
@@ -76,7 +75,6 @@ public class MP3PlayerController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == view.backtrackBtn) {
-        System.out.println("Backtrack button clicked");
         model.backtrackMusic(currentSong);
       }
     }
@@ -86,11 +84,14 @@ public class MP3PlayerController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == view.nextSongBtn) {
-        System.out.println("Next song button clicked");
-        currentSongIndex = (currentSongIndex + 1) % playlist.size(); // Loop back to the first song if at the end
-        currentSong = playlist.get(currentSongIndex);
-        // output the current song index
-        System.out.println(currentSongIndex);
+        model.stop(currentSong);
+        model.songSelected = false;
+
+        currentSongIndex++;
+        if (currentSongIndex >= playlist.size()) {
+          currentSongIndex = 0;
+        }
+        currentSong = playlist.get(currentSongIndex);        
         model.playMusic(currentSong);
       }
     }
@@ -100,9 +101,15 @@ public class MP3PlayerController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == view.previousSongBtn) {
-        System.out.println("Previous song button clicked");
-        currentSongIndex = (currentSongIndex - 1) % playlist.size(); // Loop back to the last song if at the beginning
+        model.stop(currentSong);
+        model.songSelected = false;
+
+        currentSongIndex--;
+        if (currentSongIndex < 0) {
+          currentSongIndex = playlist.size() - 1;
+        }
         currentSong = playlist.get(currentSongIndex);
+        model.playMusic(currentSong);
       }
     }
   }

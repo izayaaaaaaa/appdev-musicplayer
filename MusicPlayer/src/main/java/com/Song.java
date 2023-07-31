@@ -29,10 +29,10 @@ public class Song {
     }
   }
 
-  public String getSong() {
+  public String getSongName() {
     return songTitle;
   }
-  public void setSong(String song) {
+  public void setSongName(String song) {
     this.songTitle = song;
   }
 
