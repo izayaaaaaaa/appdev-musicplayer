@@ -38,22 +38,16 @@ public class MP3PlayerModel {
    * PAUSE MUSIC
    */
 
-  // public void pauseMusic(Song s) {
-  //   if (s != null && s.getSongClip().isRunning()) {
-  //     currentFrame = s.getSongClip().getMicrosecondPosition();
-  //     s.getSongClip().stop();
-  //     songPaused = true;
-  //   }
-  // } 
-
-
   public void AudioProcess(){
+
     try{
+
       songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
       songClip = AudioSystem.getClip();
       songClip.open(songStream);
       
     } catch (Exception ex) {
+
       ex.printStackTrace();
     }
     
@@ -61,8 +55,8 @@ public class MP3PlayerModel {
 
   public void pauseMusic(){
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
-    EntityManager em = emf.createEntityManager();
+      EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
+      EntityManager em = emf.createEntityManager();
 
     try {
       em.getTransaction().begin();
@@ -71,19 +65,13 @@ public class MP3PlayerModel {
 
       System.out.println("Song ID:" + s.getId());
 
-      // songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
-      // songClip = AudioSystem.getClip();
-      // songClip.open(songStream);
-      //songClip.stop();
-      //songClip.stop();
-      
       if (s != null && songClip.isRunning()) {
+
         currentFrame = songClip.getMicrosecondPosition();
         System.out.println("Current Frame is " + currentFrame);
 
         songClip.stop();
         songPaused = true;
-
       }
 
       em.getTransaction().commit();
@@ -100,10 +88,7 @@ public class MP3PlayerModel {
       em.close();
       emf.close();
     }
-
-    
   }
-
 
   /*
    * PLAY MUSIC
@@ -112,8 +97,8 @@ public class MP3PlayerModel {
   public void playMusic() {
     System.out.println("playMusic model method");
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
-    EntityManager em = emf.createEntityManager();
+      EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
+      EntityManager em = emf.createEntityManager();
 
       try {
 
@@ -172,20 +157,13 @@ public class MP3PlayerModel {
       s = em.find(Song.class, 1);
 
       if(s != null){
-        // songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
-        // songClip = AudioSystem.getClip();
-        // songClip.open(songStream);
-        AudioProcess();
-      
+
         try {
           songClip.close();
           resetAudioStream();
           songClip.setMicrosecondPosition(currentFrame);
-          //songClip.open(songStream);
-          AudioProcess();
           songClip.start();
           songPaused = false;
-          
           
         } catch (Exception e1) {
 
@@ -194,7 +172,6 @@ public class MP3PlayerModel {
           e1.printStackTrace();
 
         }
-
       }
 
       //em.persist(s);
@@ -215,20 +192,6 @@ public class MP3PlayerModel {
       emf.close();
     }
 
-
-    // if (s != null) {
-    //   try {
-    //     s.getSongClip().close();
-    //     resetAudioStream(s);
-    //     s.getSongClip().setMicrosecondPosition(currentFrame);
-    //     s.getSongClip().start(); // Start playing the song after resuming
-    //     songPaused = false;   // Song is not paused anymore
-
-    //   } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-    //     System.out.println("resumePlay() error");
-    //     e1.printStackTrace();
-    //   }
-    // }
   }
 
   /*
@@ -247,10 +210,9 @@ public class MP3PlayerModel {
       s = em.find(Song.class, 1);
 
       if (s != null){
-        // songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
-        // songClip = AudioSystem.getClip();
-        // songClip.open(songStream);
+  
         AudioProcess();
+
       }
 
       //em.persist(s);
@@ -272,12 +234,4 @@ public class MP3PlayerModel {
 
   }
 
-  // public void resetAudioStream(Song s) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-  //   if (s != null) {
-  //     s.setSongStream();
-  //     s.getSongClip().open(s.getSongStream());
-  //   }
-  // }
-
-  // ... (other class members)
 }
