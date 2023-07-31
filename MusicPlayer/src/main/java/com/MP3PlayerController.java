@@ -55,7 +55,7 @@ public class MP3PlayerController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == view.fastForwardBtn) {
-        //model.fastForwardMusic();
+        model.fastForwardMusic();
       }
     }
   }
@@ -64,7 +64,7 @@ public class MP3PlayerController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == view.backtrackBtn) {
-        //model.backtrackMusic();
+        model.backtrackMusic();
       }
     }
   }

@@ -109,7 +109,7 @@ public class MP3PlayerModel {
         if (!songSelected) {  
       
           s.setSongTitle("Anti Hero");
-          s.setSongPath("Taylor Swift - Anti-Hero (Official Music Video).wav");
+          s.setSongPath("MusicPlayer/src/main/java/com/songs/Anti-Hero - Taylor Swift.wav");
           
           System.out.println("Song Path: " + s.getSongPath());
           AudioProcess();
@@ -234,18 +234,85 @@ public class MP3PlayerModel {
 
   }
 
-  public void fastForwardMusic(Song s) {
-    if (s != null) {
-      // long currentPosition = s.getSongClip().getMicrosecondPosition();
-      // long newPosition = currentPosition + 1000000; // Adjust the value as needed for the fast forward speed
-      // if (newPosition > s.getSongClip().getMicrosecondLength()) {
-      //   newPosition = s.getSongClip().getMicrosecondLength(); // Make sure we don't go beyond the song length
-      // }
-      // s.getSongClip().setMicrosecondPosition(newPosition);
+  public void fastForwardMusic() {
+
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
+    EntityManager em = emf.createEntityManager();
+
+    try {
+
+        em.getTransaction().begin();
+
+      if (s != null){
+
+        s = em.find(Song.class, 1);
+
+        long currentPosition = songClip.getMicrosecondPosition();
+        long newPosition = currentPosition + 1000000;
+        
+        if(newPosition > songClip.getMicrosecondLength()){
+          newPosition = songClip.getMicrosecondLength();
+        }
+
+        songClip.setMicrosecondPosition(newPosition);
+
+      }
+
+      em.getTransaction().commit();
+
+    } catch (Exception e) {
+      // TODO: handle exception
+
+      if(em.getTransaction() != null){
+          em.getTransaction().rollback();
+      }
+
+      e.printStackTrace();
+
+    } finally {
+      em.close();
+      emf.close();
     }
   }
 
-  public void backtrackMusic(Song s) {
+  public void backtrackMusic() {
+
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
+    EntityManager em = emf.createEntityManager();
+
+    try {
+
+      em.getTransaction().begin();
+
+      if (s != null){
+
+        s = em.find(Song.class, 1);
+
+        long currentPosition = songClip.getMicrosecondPosition();
+        long newPosition = currentPosition - 1000000;
+        
+        if(newPosition < 0){
+          newPosition = 0;
+        }
+        songClip.setMicrosecondPosition(newPosition);
+
+      }
+
+      em.getTransaction().commit();
+      
+    } catch (Exception e) {
+      // TODO: handle exception
+
+      if(em.getTransaction() != null){
+          em.getTransaction().rollback();
+      }
+
+      e.printStackTrace();
+    } finally {
+      em.close();
+      emf.close();
+    }
+
     if (s != null) {
       // long currentPosition = s.getSongClip().getMicrosecondPosition();
       // long newPosition = currentPosition - 1000000; // Adjust the value as needed for the backtrack speed
@@ -256,7 +323,7 @@ public class MP3PlayerModel {
     }
   }
 
-  public void stop(Song s) {
+  public void stop() {
     if (s != null) {
       //s.getSongClip().stop();
     }
