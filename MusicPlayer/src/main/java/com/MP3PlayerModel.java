@@ -46,6 +46,19 @@ public class MP3PlayerModel {
   //   }
   // } 
 
+
+  public void AudioProcess(){
+    try{
+      songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
+      songClip = AudioSystem.getClip();
+      songClip.open(songStream);
+      
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+    
+  }
+
   public void pauseMusic(){
 
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
@@ -58,14 +71,13 @@ public class MP3PlayerModel {
 
       System.out.println("Song ID:" + s.getId());
 
-      songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
-      songClip = AudioSystem.getClip();
-      songClip.open(songStream);
+      // songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
+      // songClip = AudioSystem.getClip();
+      // songClip.open(songStream);
       //songClip.stop();
       //songClip.stop();
-
+      
       if (s != null && songClip.isRunning()) {
-
         currentFrame = songClip.getMicrosecondPosition();
         System.out.println("Current Frame is " + currentFrame);
 
@@ -74,8 +86,8 @@ public class MP3PlayerModel {
 
       }
 
-      //em.persist(s);
       em.getTransaction().commit();
+
     } catch (Exception e) {
       // TODO: handle exception
 
@@ -115,9 +127,7 @@ public class MP3PlayerModel {
           s.setSongPath("Taylor Swift - Anti-Hero (Official Music Video).wav");
           
           System.out.println("Song Path: " + s.getSongPath());
-          songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
-          songClip = AudioSystem.getClip();
-          songClip.open(songStream);
+          AudioProcess();
 
           songClip.start();
           songSelected = true;  // Song has been selected
@@ -162,20 +172,22 @@ public class MP3PlayerModel {
       s = em.find(Song.class, 1);
 
       if(s != null){
-        songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
-        songClip = AudioSystem.getClip();
-        songClip.open(songStream);
+        // songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
+        // songClip = AudioSystem.getClip();
+        // songClip.open(songStream);
+        AudioProcess();
       
         try {
           songClip.close();
-          //resetAudioStream();
+          resetAudioStream();
           songClip.setMicrosecondPosition(currentFrame);
-          songClip.open(songStream);
+          //songClip.open(songStream);
+          AudioProcess();
           songClip.start();
           songPaused = false;
           
           
-        } catch (IOException | LineUnavailableException e1) {
+        } catch (Exception e1) {
 
           System.out.println("resumePlay() error");
 
@@ -235,9 +247,10 @@ public class MP3PlayerModel {
       s = em.find(Song.class, 1);
 
       if (s != null){
-        songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
-        songClip = AudioSystem.getClip();
-        songClip.open(songStream);
+        // songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
+        // songClip = AudioSystem.getClip();
+        // songClip.open(songStream);
+        AudioProcess();
       }
 
       //em.persist(s);
