@@ -8,7 +8,7 @@ import java.io.IOException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
+import javax.persistence.Query;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -121,8 +121,6 @@ public class MP3PlayerModel {
           resumePlay();
         }
 
-        em.persist(s);
-        em.getTransaction().commit();
 
       } catch (Exception ex) {
 
@@ -173,8 +171,6 @@ public class MP3PlayerModel {
         }
       }
 
-      //em.persist(s);
-      em.getTransaction().commit();
       
     } catch (Exception e) {
 
@@ -213,9 +209,6 @@ public class MP3PlayerModel {
         AudioProcess();
 
       }
-
-      //em.persist(s);
-      em.getTransaction().commit();
 
 
     } catch (Exception e) {
@@ -257,7 +250,6 @@ public class MP3PlayerModel {
 
       }
 
-      em.getTransaction().commit();
 
     } catch (Exception e) {
       // TODO: handle exception
@@ -296,8 +288,6 @@ public class MP3PlayerModel {
         songClip.setMicrosecondPosition(newPosition);
 
       }
-
-      em.getTransaction().commit();
       
     } catch (Exception e) {
       // TODO: handle exception
@@ -325,19 +315,21 @@ public class MP3PlayerModel {
   public void nextSongMusic(){
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
     EntityManager em = emf.createEntityManager();
+    Query query = em.createQuery("SELECT COUNT(s) FROM Song s");
+    Long recordCount = (Long) query.getSingleResult();
 
     try {
 
       songClip.stop();
-    
       em.getTransaction().begin();
-
       s_id = s_id + 1;
 
+      if(s_id>=recordCount.intValue()+1){
+        s_id = 1;
+      }
+
       s = em.find(Song.class, s_id);
-
       AudioProcess();
-
       songClip.start();
 
       
@@ -358,22 +350,23 @@ public class MP3PlayerModel {
   public void previousSongMusic(){
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
     EntityManager em = emf.createEntityManager();
+    Query query = em.createQuery("SELECT COUNT(s) FROM Song s");
+    Long recordCount = (Long) query.getSingleResult();
 
     try {
 
       songClip.stop();
-    
       em.getTransaction().begin();
-
       s_id = s_id - 1;
 
+      if(s_id<=0){
+        s_id = recordCount.intValue();
+      }
+
       s = em.find(Song.class, s_id);
-
       AudioProcess();
-
       songClip.start();
-
-
+      
     } catch (Exception e) {
       // TODO: handle exception
       if(em.getTransaction() != null){

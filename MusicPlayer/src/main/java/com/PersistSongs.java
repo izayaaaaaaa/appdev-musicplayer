@@ -1,9 +1,9 @@
 package com;
 
-import javax.management.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 public class PersistSongs {
     public PersistSongs(){
@@ -28,13 +28,21 @@ public class PersistSongs {
         s2.setSongPath("MusicPlayer/src/main/java/com/songs/Curious - Hayley Kiyoko.wav");
         s3.setSongPath("MusicPlayer/src/main/java/com/songs/Sex (with my ex) - Fletcher.wav");
 
+        Query query = em.createQuery("SELECT COUNT(s) FROM Song s");
+        Long recordCount = (Long) query.getSingleResult();
+
+        if (recordCount > 0) {
+            System.out.println("The table has contents.");
+        } else {
+            System.out.println("The table is empty.");
+            em.persist(s1);
+            em.persist(s2);
+            em.persist(s3);
+
+            em.getTransaction().commit();   //commit changes to the table
+        }
+
         
-
-        em.persist(s1);
-        em.persist(s2);
-        em.persist(s3);
-
-        em.getTransaction().commit();   //commit changes to the table
                 
         //close emf and em
 		em.close();
