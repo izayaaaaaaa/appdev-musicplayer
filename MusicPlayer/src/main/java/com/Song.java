@@ -22,7 +22,6 @@ import javax.persistence.Table;
 public class Song {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "MID", unique = true)
   private int id;
 

@@ -32,6 +32,8 @@ public class MP3PlayerModel {
   public Song s;
   public AudioInputStream songStream ;
   public Clip songClip;
+
+  int s_id = 1;
   
   
   /*
@@ -61,7 +63,7 @@ public class MP3PlayerModel {
     try {
       em.getTransaction().begin();
 
-      s = em.find(Song.class, 1);
+      s = em.find(Song.class, s_id);
 
       System.out.println("Song ID:" + s.getId());
 
@@ -104,13 +106,10 @@ public class MP3PlayerModel {
 
         em.getTransaction().begin();
 
-        s = new Song();
+        s = em.find(Song.class, s_id);
 
         if (!songSelected) {  
-      
-          s.setSongTitle("Anti Hero");
-          s.setSongPath("MusicPlayer/src/main/java/com/songs/Anti-Hero - Taylor Swift.wav");
-          
+
           System.out.println("Song Path: " + s.getSongPath());
           AudioProcess();
 
@@ -154,7 +153,7 @@ public class MP3PlayerModel {
 
       em.getTransaction().begin();
 
-      s = em.find(Song.class, 1);
+      s = em.find(Song.class, s_id);
 
       if(s != null){
 
@@ -207,7 +206,7 @@ public class MP3PlayerModel {
       
       em.getTransaction().begin();
 
-      s = em.find(Song.class, 1);
+      s = em.find(Song.class, s_id);
 
       if (s != null){
   
@@ -245,7 +244,7 @@ public class MP3PlayerModel {
 
       if (s != null){
 
-        s = em.find(Song.class, 1);
+        s = em.find(Song.class, s_id);
 
         long currentPosition = songClip.getMicrosecondPosition();
         long newPosition = currentPosition + 1000000;
@@ -286,7 +285,7 @@ public class MP3PlayerModel {
 
       if (s != null){
 
-        s = em.find(Song.class, 1);
+        s = em.find(Song.class, s_id);
 
         long currentPosition = songClip.getMicrosecondPosition();
         long newPosition = currentPosition - 1000000;
