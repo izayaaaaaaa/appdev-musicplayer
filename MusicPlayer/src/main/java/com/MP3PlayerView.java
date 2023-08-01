@@ -17,6 +17,10 @@ import javax.swing.JTextArea;
 public class MP3PlayerView extends JFrame{
   JPanel mainPanel, logoPanel, settingsPanel, songListPanel, currentlyPlayingPanel, lyricsPanel, bottomPanel;
   JPanel topSettingsPanel, bottomSettingsPanel;
+  JPanel leftPaddingPanel, rightPaddingPanel, currentSongDisplayPanel, songDetailsPanel, playBackPanel;
+
+  JLabel songNameLbl, artistNameLbl, artistImgLbl;
+
   JTextArea lyricsTextArea;
   JScrollPane lyricsScrollPane;
 
@@ -141,6 +145,7 @@ public class MP3PlayerView extends JFrame{
     songDetails.add(songName);
     songDetails.add(artistName);
     
+    
     //Create current currentSongDisplay Panel
     JPanel currentSongDisplay = new JPanel(new FlowLayout(0,50,25));
     currentSongDisplay.setBackground(Color.ORANGE);
@@ -182,14 +187,12 @@ public class MP3PlayerView extends JFrame{
     bottomPanel.add(leftPaddingPanel, BorderLayout.WEST);
     bottomPanel.add(currentSongDisplay, BorderLayout.CENTER);
     bottomPanel.add(rightPaddingPanel, BorderLayout.EAST);
+
     c.anchor = GridBagConstraints.PAGE_END;
     c.fill = GridBagConstraints.HORIZONTAL;
     c.gridx = 0;
     c.gridy = 2;
     c.gridwidth = 3;
-    mainPanel.add(bottomPanel, c);
-
-
     mainPanel.add(bottomPanel, c);
 
     this.setLayout(new GridLayout(5, 3));
@@ -201,6 +204,10 @@ public class MP3PlayerView extends JFrame{
     this.setResizable(true);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setVisible(true);
+  }
+
+  public void createSongNameLbl(){
+    songNameLbl = new JLabel();
   }
 
   public void createLyricsTextArea(){
@@ -238,7 +245,8 @@ public class MP3PlayerView extends JFrame{
   public void createPlayButton() {
     // Display the current song on the UI
     playBtn = new JButton("Play");
-    // panelD.add(playBtn);
+    //playBackPanel.add
+    
   }
   
   public void createPauseButton() {
