@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -29,7 +30,7 @@ public class MP3PlayerView extends JFrame{
   JButton folderBtn, settingsBtn, minBtn, maxBtn, exitBtn;
 
   JTable showPlaylist;
-  JTable songList;
+  JList<String> songList;
   JScrollPane sp;
   JProgressBar pb;
   JLabel logoTitle;
@@ -78,27 +79,13 @@ public class MP3PlayerView extends JFrame{
     createExitButton();
 
     // create a list of songs
-    String[] dummySongs = {
-      "Song 1",
-      "Song 2",
-      "Song 3",
-      "Song 4",
-      "Song 5",
-      "Song 6",
-      "Song 7",
-      "Song 8",
-      "Song 9",
-      "Song 10",
-    };
-
     c.gridx = 0;
     c.gridy = 1;
     c.gridheight = 3;
-    songListPanel = new JPanel(new GridLayout(10, 1));
+    createSongList();
+    songListPanel = new JPanel(new GridLayout(1, 1));
+    songListPanel.add(songList);
     // songListPanel.setBackground(Color.ORANGE);
-    for (int i = 1; i <= 10; i++) {
-      songListPanel.add(new JLabel(dummySongs[i-1]));
-    }
     mainPanel.add(songListPanel, c);
 
     c.gridx = 1;
@@ -203,6 +190,23 @@ public class MP3PlayerView extends JFrame{
     this.setResizable(true);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setVisible(true);
+  }
+
+  public void createSongList(){
+    String[] dummySongs = {
+      "Song 1",
+      "Song 2",
+      "Song 3",
+      "Song 4",
+      "Song 5",
+      "Song 6",
+      "Song 7",
+      "Song 8",
+      "Song 9",
+      "Song 10",
+    };
+
+    songList = new JList<>(dummySongs);
   }
 
   public void createSongNameLbl(){
