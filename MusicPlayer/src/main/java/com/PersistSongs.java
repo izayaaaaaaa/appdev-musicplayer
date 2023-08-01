@@ -16,9 +16,9 @@ public class PersistSongs {
         Song s2 = new Song();
         Song s3 = new Song();
 
-        s1.setId(1);
-        s2.setId(2);
-        s3.setId(3);
+        s1.setId(0);
+        s2.setId(1);
+        s3.setId(2);
 
         s1.setSongTitle("Anti-Hero");
         s2.setSongTitle("Curious");
@@ -40,10 +40,7 @@ public class PersistSongs {
             em.persist(s3);
 
             em.getTransaction().commit();   //commit changes to the table
-        }
-
-        
-                
+        }     
         //close emf and em
 		em.close();
 		emf.close();

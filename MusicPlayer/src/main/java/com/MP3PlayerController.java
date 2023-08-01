@@ -7,6 +7,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 // import javax.swing.Action;
 
 public class MP3PlayerController {
@@ -24,9 +30,29 @@ public class MP3PlayerController {
     view.backtrackBtn.addActionListener(new backtrackListener());
     view.nextSongBtn.addActionListener(new nextSongListener());
     view.previousSongBtn.addActionListener(new previousSongListener());
+    view.songList.addListSelectionListener(new songSelectionListener());
 
     view.playBtn.setVisible(true);
     view.pauseBtn.setVisible(false);
+  }
+
+  class songSelectionListener implements ListSelectionListener {
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+      int selection = view.songList.getSelectedIndex();
+      int id = 0;
+
+      if(selection <= -1){
+        id = -1;
+      }
+      else{
+        id = selection;
+      }
+
+      model.fetchSong(id);
+      
+    } 
   }
   
   class playListener implements ActionListener {

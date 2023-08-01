@@ -4,6 +4,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -193,21 +196,24 @@ public class MP3PlayerView extends JFrame{
   }
 
   public void createSongList(){
-    String[] dummySongs = {
-      "Song 1",
-      "Song 2",
-      "Song 3",
-      "Song 4",
-      "Song 5",
-      "Song 6",
-      "Song 7",
-      "Song 8",
-      "Song 9",
-      "Song 10",
-    };
+    songList = new JList<>();
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
+    EntityManager em = emf.createEntityManager();
+    List<Song> tracks = em.createQuery("SELECT s FROM Song s", Song.class).getResultList();
+    em.close();
+    emf.close();
 
-    songList = new JList<>(dummySongs);
+    String[] songTitles = new String[tracks.size()];
+    for (int i = 0; i < tracks.size(); i++) {
+        Song song = tracks.get(i);
+        songTitles[i] = song.getSongTitle();
+    }
+
+    // Set the data to the JList
+    songList.setListData(songTitles);
   }
+
+    
 
   public void createSongNameLbl(){
     songNameLbl = new JLabel("Song Title");
