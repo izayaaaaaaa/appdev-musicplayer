@@ -31,6 +31,9 @@ public class Song {
   @Column(name = "SongPath", nullable = false)
   private String songPath;
 
+  @Column(name = "LyricsPath", nullable = false)
+  private String lyricsPath;
+
   // private AudioInputStream songStream;
   // private Clip songClip;
   
@@ -50,10 +53,11 @@ public class Song {
   //   // }
   // }
 
-  public Song(int id, String songTitle, String songPath) {
+  public Song(int id, String songTitle, String songPath, String lyricsPath) {
     this.id = id;
     this.songTitle = songTitle;
     this.songPath = songPath;
+    this.lyricsPath = lyricsPath;
   }
 
   public Song () {
@@ -80,6 +84,14 @@ public class Song {
 
   public void setId(int id) {
     this.id = id;
+  }
+
+  public String getLyricsPath() {
+    return lyricsPath;
+  }
+
+  public void setLyricsPath(String lyricsPath) {
+    this.lyricsPath = lyricsPath;
   }
 
   

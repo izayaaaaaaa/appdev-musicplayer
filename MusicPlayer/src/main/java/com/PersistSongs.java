@@ -27,6 +27,10 @@ public class PersistSongs {
         s1.setSongPath("MusicPlayer/src/main/java/com/songs/Anti-Hero - Taylor Swift.wav");
         s2.setSongPath("MusicPlayer/src/main/java/com/songs/Curious - Hayley Kiyoko.wav");
         s3.setSongPath("MusicPlayer/src/main/java/com/songs/Sex (with my ex) - Fletcher.wav");
+        
+        s1.setLyricsPath("MusicPlayer/src/main/java/com/lyrics/Taylor Swift - Anti-Hero.txt");
+        s2.setLyricsPath("MusicPlayer/src/main/java/com/lyrics/Hayley Kiyoko - Curious.txt");
+        s3.setLyricsPath("None");
 
         Query query = em.createQuery("SELECT COUNT(s) FROM Song s");
         Long recordCount = (Long) query.getSingleResult();
