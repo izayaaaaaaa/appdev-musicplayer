@@ -109,20 +109,87 @@ public class MP3PlayerView extends JFrame{
     mainPanel.add(lyricsPanel, c);
     createLyricsTextArea();
 
-
+    c.gridx = 2;
+    c.gridy = 1;
+    lyricsPanel = new JPanel();
+    lyricsPanel.setBackground(Color.CYAN);
+    mainPanel.add(lyricsPanel, c);
 
     c.gridx = 0;
     c.gridy = 2;
-    c.gridheight = 1;
     c.gridwidth = 3;
     bottomPanel = new JPanel();
+    bottomPanel.setLayout(new BorderLayout()); 
     bottomPanel.setBackground(Color.MAGENTA);
-    // createPreviousSongButton();
-    // createBacktrackButton();
-    // createPlayButton();
-    // createPauseButton();
-    // createFastForwardButton();
-    // createNextSongButton();
+
+    //left padding panel
+    JPanel leftPaddingPanel = new JPanel();
+    leftPaddingPanel.setPreferredSize(new Dimension(20, 1));
+    leftPaddingPanel.setOpaque(false);
+
+    //right padding panel
+    JPanel rightPaddingPanel = new JPanel();
+    rightPaddingPanel.setPreferredSize(new Dimension(20, 1));
+    rightPaddingPanel.setOpaque(false);
+
+    //Song details panel
+    JPanel songDetails = new JPanel(new GridLayout(2, 0));
+    JLabel songName = new JLabel("Song Title");
+    JLabel artistName = new JLabel("Artist Name");
+
+    //Add contnent for song details
+    songDetails.add(songName);
+    songDetails.add(artistName);
+    
+    //Create current currentSongDisplay Panel
+    JPanel currentSongDisplay = new JPanel(new FlowLayout(0,50,25));
+    currentSongDisplay.setBackground(Color.ORANGE);
+
+    //Creat artist image
+    JLabel artistImg = new JLabel("Image Here");
+    artistImg.setSize(50, 50);
+
+    //Set the progress bar
+    createProgressBar();
+    pb.setPreferredSize(new Dimension(600, 10));
+    
+    //Create playback panel
+    JPanel playBackPanel = new JPanel(new FlowLayout());
+    playBackPanel.setBackground(Color.CYAN);
+
+    //Create buttons for playback Panel
+    createPreviousSongButton();
+    createBacktrackButton();
+    createPlayButton();
+    createPauseButton();
+    createFastForwardButton();
+    createNextSongButton();
+
+    //Add all buttons into the playback panel
+    playBackPanel.add(previousSongBtn);
+    playBackPanel.add(backtrackBtn);
+    playBackPanel.add(playBtn);
+    playBackPanel.add(pauseBtn);
+    playBackPanel.add(fastForwardBtn);
+    playBackPanel.add(nextSongBtn);
+
+    //Add the panels into the song display panel
+    currentSongDisplay.add(artistImg);
+    currentSongDisplay.add(songDetails);
+    currentSongDisplay.add(pb);
+    currentSongDisplay.add(playBackPanel);
+
+    bottomPanel.add(leftPaddingPanel, BorderLayout.WEST);
+    bottomPanel.add(currentSongDisplay, BorderLayout.CENTER);
+    bottomPanel.add(rightPaddingPanel, BorderLayout.EAST);
+    c.anchor = GridBagConstraints.PAGE_END;
+    c.fill = GridBagConstraints.HORIZONTAL;
+    c.gridx = 0;
+    c.gridy = 2;
+    c.gridwidth = 3;
+    mainPanel.add(bottomPanel, c);
+
+
     mainPanel.add(bottomPanel, c);
 
     this.setLayout(new GridLayout(5, 3));
