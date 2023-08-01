@@ -46,6 +46,7 @@ public class MP3PlayerView extends JFrame{
     c.gridx = 0;
     c.gridy = 0;
     c.gridwidth = 2;
+    c.gridheight = 1;
     logoPanel = new JPanel();
     // logoPanel.setBackground(Color.GREEN);
     logoTitle = new JLabel("jukebox");
@@ -55,6 +56,7 @@ public class MP3PlayerView extends JFrame{
     c.gridx = 2;
     c.gridy = 0;
     c.gridwidth = 1;
+    c.gridheight = 1;
     settingsPanel = new JPanel(new GridLayout(2, 1));
 
     topSettingsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -119,47 +121,44 @@ public class MP3PlayerView extends JFrame{
     lyricsPanel.setBackground(Color.CYAN);
     mainPanel.add(lyricsPanel, c);
 
+
+    /////////////////////////////////////////////////////////////////////////
+    //Bottom Panel Area
     c.gridx = 0;
-    c.gridy = 2;
+    c.gridy = 4; // Update the gridy value to 4
     c.gridwidth = 3;
     bottomPanel = new JPanel();
     bottomPanel.setLayout(new BorderLayout()); 
     bottomPanel.setBackground(Color.MAGENTA);
 
     //left padding panel
-    JPanel leftPaddingPanel = new JPanel();
-    leftPaddingPanel.setPreferredSize(new Dimension(20, 1));
-    leftPaddingPanel.setOpaque(false);
-
+    createLeftPaddingPanel();
+    
     //right padding panel
-    JPanel rightPaddingPanel = new JPanel();
-    rightPaddingPanel.setPreferredSize(new Dimension(20, 1));
-    rightPaddingPanel.setOpaque(false);
-
+    createRightPaddingPanel();
+    
     //Song details panel
-    JPanel songDetails = new JPanel(new GridLayout(2, 0));
-    JLabel songName = new JLabel("Song Title");
-    JLabel artistName = new JLabel("Artist Name");
+    createSongDetailsPanel();
+    createSongNameLbl();
+    createArtistNameLbl();
 
     //Add contnent for song details
-    songDetails.add(songName);
-    songDetails.add(artistName);
-    
+    songDetailsPanel.add(songNameLbl);
+    songDetailsPanel.add(artistNameLbl);
     
     //Create current currentSongDisplay Panel
-    JPanel currentSongDisplay = new JPanel(new FlowLayout(0,50,25));
-    currentSongDisplay.setBackground(Color.ORANGE);
+    createCurrentSongDisplayPanel();
+    currentSongDisplayPanel.setBackground(Color.ORANGE);
 
     //Creat artist image
-    JLabel artistImg = new JLabel("Image Here");
-    artistImg.setSize(50, 50);
+    createArtistImgLbl();
 
     //Set the progress bar
     createProgressBar();
     pb.setPreferredSize(new Dimension(600, 10));
     
     //Create playback panel
-    JPanel playBackPanel = new JPanel(new FlowLayout());
+    createPlayBackPanel();
     playBackPanel.setBackground(Color.CYAN);
 
     //Create buttons for playback Panel
@@ -179,23 +178,23 @@ public class MP3PlayerView extends JFrame{
     playBackPanel.add(nextSongBtn);
 
     //Add the panels into the song display panel
-    currentSongDisplay.add(artistImg);
-    currentSongDisplay.add(songDetails);
-    currentSongDisplay.add(pb);
-    currentSongDisplay.add(playBackPanel);
+    currentSongDisplayPanel.add(artistImgLbl);
+    currentSongDisplayPanel.add(songDetailsPanel);
+    currentSongDisplayPanel.add(pb);
+    currentSongDisplayPanel.add(playBackPanel);
 
     bottomPanel.add(leftPaddingPanel, BorderLayout.WEST);
-    bottomPanel.add(currentSongDisplay, BorderLayout.CENTER);
+    bottomPanel.add(currentSongDisplayPanel, BorderLayout.CENTER);
     bottomPanel.add(rightPaddingPanel, BorderLayout.EAST);
 
     c.anchor = GridBagConstraints.PAGE_END;
     c.fill = GridBagConstraints.HORIZONTAL;
     c.gridx = 0;
-    c.gridy = 2;
+    c.gridy = 4; // Update the gridy value to 4
     c.gridwidth = 3;
     mainPanel.add(bottomPanel, c);
 
-    this.setLayout(new GridLayout(5, 3));
+    this.setLayout(new GridLayout(1, 3)); // Consider updating the GridLayout to (6, 1) if you want bottomPanel to occupy the entire bottom row
     this.add(mainPanel);
     
     this.setTitle("MP3 Player");
@@ -207,9 +206,42 @@ public class MP3PlayerView extends JFrame{
   }
 
   public void createSongNameLbl(){
-    songNameLbl = new JLabel();
+    songNameLbl = new JLabel("Song Title");
   }
 
+  public void createArtistNameLbl(){
+    artistNameLbl = new JLabel("Artist Name");
+  }
+
+  public void createArtistImgLbl(){
+    artistImgLbl = new JLabel("Image Here");
+    artistImgLbl.setSize(50, 50);
+  }
+
+  public void createLeftPaddingPanel(){
+    leftPaddingPanel = new JPanel();
+    leftPaddingPanel.setPreferredSize(new Dimension(20, 1));
+    leftPaddingPanel.setOpaque(false);
+  }
+
+  public void createRightPaddingPanel(){
+    rightPaddingPanel = new JPanel();
+    rightPaddingPanel.setPreferredSize(new Dimension(20, 1));
+    rightPaddingPanel.setOpaque(false);
+  }
+
+  public void createCurrentSongDisplayPanel(){
+    currentSongDisplayPanel = new JPanel(new FlowLayout(0,50,25));
+  }
+
+  public void createSongDetailsPanel(){
+    songDetailsPanel = new JPanel(new GridLayout(2, 0));
+  }
+
+  public void createPlayBackPanel(){
+    playBackPanel =  new JPanel(new FlowLayout());
+  }
+  
   public void createLyricsTextArea(){
     
     lyricsTextArea = new JTextArea("Lyrics Here");
