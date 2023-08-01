@@ -10,10 +10,18 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 
 public class MP3PlayerView extends JFrame{
   JPanel mainPanel, logoPanel, settingsPanel, songListPanel, currentlyPlayingPanel, lyricsPanel, bottomPanel;
+  JPanel topSettingsPanel, bottomSettingsPanel;
+  JTextArea lyricsTextArea;
+  JScrollPane lyricsScrollPane;
+
   JButton playBtn, pauseBtn, fastForwardBtn, backtrackBtn, nextSongBtn, previousSongBtn;
+
+  JButton folderBtn, settingsBtn, minBtn, maxBtn, exitBtn;
+
   JTable showPlaylist;
   JTable songList;
   JScrollPane sp;
@@ -38,9 +46,24 @@ public class MP3PlayerView extends JFrame{
     c.gridx = 2;
     c.gridy = 0;
     c.gridwidth = 1;
-    settingsPanel = new JPanel();
+    settingsPanel = new JPanel(new GridLayout(2, 1));
+
+    topSettingsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    topSettingsPanel.setBackground(Color.RED);
+
+    bottomSettingsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    bottomSettingsPanel.setBackground(Color.RED);
+
+    settingsPanel.add(topSettingsPanel);
+    settingsPanel.add(bottomSettingsPanel);
     settingsPanel.setBackground(Color.YELLOW);
+
     mainPanel.add(settingsPanel, c);
+    createFolderButton();
+    createSettingsButton();
+    createMinButton();
+    createMaxButton();
+    createExitButton();
 
     c.gridx = 0;
     c.gridy = 1;
@@ -63,9 +86,13 @@ public class MP3PlayerView extends JFrame{
 
     c.gridx = 2;
     c.gridy = 1;
-    lyricsPanel = new JPanel();
+    lyricsPanel = new JPanel(new BorderLayout());
     lyricsPanel.setBackground(Color.CYAN);
+
     mainPanel.add(lyricsPanel, c);
+    createLyricsTextArea();
+
+
 
     c.gridx = 0;
     c.gridy = 2;
@@ -76,12 +103,44 @@ public class MP3PlayerView extends JFrame{
 
     this.setLayout(new GridLayout(3, 3));
     this.add(mainPanel);
-
+    
     this.setTitle("MP3 Player");
-    this.setSize(500, 500);
+    this.setSize(1440, 1024);
     this.setResizable(false);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setVisible(true);
+  }
+
+  public void createLyricsTextArea(){
+    
+    lyricsTextArea = new JTextArea("Lyrics Here");
+    lyricsScrollPane = new JScrollPane(lyricsTextArea);
+    lyricsPanel.add(lyricsScrollPane, BorderLayout.CENTER);
+  }
+
+  public void createFolderButton(){
+    folderBtn = new JButton("Folder");
+    bottomSettingsPanel.add(folderBtn);
+  }
+
+  public void createSettingsButton(){
+    settingsBtn = new JButton("Settings");
+    bottomSettingsPanel.add(settingsBtn);
+  }
+
+  public void createMinButton(){
+    minBtn = new JButton("Min");
+    topSettingsPanel.add(minBtn);
+  }
+
+  public void createMaxButton(){
+    maxBtn = new JButton("Max");
+    topSettingsPanel.add(maxBtn);
+  }
+
+  public void createExitButton(){
+    exitBtn = new JButton("Exit");
+    topSettingsPanel.add(exitBtn);
   }
   
   public void createPlayButton() {
@@ -125,6 +184,9 @@ public class MP3PlayerView extends JFrame{
     //JProgressbar(min, max)
     pb = new JProgressBar(); //Pass as parameter for current song time duration
   }
+
+  //public void 
+
   
   public void createPlaylist(List<String> playlist) {
     showPlaylist = new JTable(); 
