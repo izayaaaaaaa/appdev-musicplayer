@@ -12,7 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 public class MP3PlayerView extends JFrame{
-  JPanel panel1, panel2, panelA, panelB, panelC, panelD;
+  JPanel mainPanel, logoPanel, settingsPanel, songListPanel, currentlyPlayingPanel, lyricsPanel, bottomPanel;
   JButton playBtn, pauseBtn, fastForwardBtn, backtrackBtn, nextSongBtn, previousSongBtn;
   JTable showPlaylist;
   JTable songList;
@@ -21,9 +21,8 @@ public class MP3PlayerView extends JFrame{
   
   
   public MP3PlayerView() {
-    panel1 = new JPanel(new GridBagLayout());
-    panel1 = new JPanel(new GridBagLayout());
-    panel1.setBackground(Color.BLUE);
+    mainPanel = new JPanel(new GridBagLayout());
+    // mainPanel.setBackground(Color.BLUE);
     GridBagConstraints c = new GridBagConstraints();
     c.weightx = 1;
     c.weighty = 1;
@@ -31,42 +30,52 @@ public class MP3PlayerView extends JFrame{
 
     c.gridx = 0;
     c.gridy = 0;
-    panelA = new JPanel();
-    panelA.setBackground(Color.GREEN);
-    panel1.add(panelA, c);
+    c.gridwidth = 2;
+    logoPanel = new JPanel();
+    logoPanel.setBackground(Color.GREEN);
+    mainPanel.add(logoPanel, c);
+
+    c.gridx = 2;
+    c.gridy = 0;
+    c.gridwidth = 1;
+    settingsPanel = new JPanel();
+    settingsPanel.setBackground(Color.YELLOW);
+    mainPanel.add(settingsPanel, c);
 
     c.gridx = 0;
     c.gridy = 1;
-    panelB = new JPanel();
-    panelB.setBackground(Color.YELLOW);
-    panel1.add(panelB, c);
+    songListPanel = new JPanel();
+    songListPanel.setBackground(Color.ORANGE);
+    mainPanel.add(songListPanel, c);
+
+    c.gridx = 1;
+    c.gridy = 1;
+    currentlyPlayingPanel = new JPanel();
+    currentlyPlayingPanel.setBackground(Color.PINK);
+    mainPanel.add(currentlyPlayingPanel, c);
+
+    // createPreviousSongButton();
+    // createBacktrackButton();
+    // createPlayButton();
+    // createPauseButton();
+    // createFastForwardButton();
+    // createNextSongButton();
+
+    c.gridx = 2;
+    c.gridy = 1;
+    lyricsPanel = new JPanel();
+    lyricsPanel.setBackground(Color.CYAN);
+    mainPanel.add(lyricsPanel, c);
 
     c.gridx = 0;
     c.gridy = 2;
-    panelC = new JPanel();
-    panelC.setBackground(Color.ORANGE);
-    panel1.add(panelC, c);
+    c.gridwidth = 3;
+    bottomPanel = new JPanel();
+    bottomPanel.setBackground(Color.MAGENTA);
+    mainPanel.add(bottomPanel, c);
 
-    c.gridx = 0;
-    c.gridy = 3;
-    panelD = new JPanel();
-    panelD.setBackground(Color.PINK);
-
-    createPreviousSongButton();
-    createBacktrackButton();
-    createPlayButton();
-    createPauseButton();
-    createFastForwardButton();
-    createNextSongButton();
-
-    panel1.add(panelD, c);
-
-    panel2 = new JPanel(new BorderLayout());
-    panel2.setBackground(Color.RED);
-
-    this.setLayout(new GridLayout(1, 2));
-    this.add(panel1);
-    this.add(panel2);
+    this.setLayout(new GridLayout(3, 3));
+    this.add(mainPanel);
 
     this.setTitle("MP3 Player");
     this.setSize(500, 500);
@@ -78,37 +87,37 @@ public class MP3PlayerView extends JFrame{
   public void createPlayButton() {
     // Display the current song on the UI
     playBtn = new JButton("Play");
-    panelD.add(playBtn);
+    // panelD.add(playBtn);
   }
   
   public void createPauseButton() {
     pauseBtn = new JButton("Pause");
-    panelD.add(pauseBtn);
+    // panelD.add(pauseBtn);
   }
   
   public void createFastForwardButton(){
     fastForwardBtn = new JButton("FastForward");
-    panelD.add(fastForwardBtn);
+    // panelD.add(fastForwardBtn);
   }
   
   public void createBacktrackButton(){
     backtrackBtn = new JButton("Backtrack");
-    panelD.add(backtrackBtn);
+    // panelD.add(backtrackBtn);
   }
   
   public void createNextSongButton(){
     nextSongBtn = new JButton("Next");
-    panelD.add(nextSongBtn);
+    // panelD.add(nextSongBtn);
   }
   
   public void createPreviousSongButton(){
     previousSongBtn = new JButton("Previous");
-    panelD.add(previousSongBtn);
+    // panelD.add(previousSongBtn);
   }
 
   public void createCurrentSong(String songName){
     JLabel currentSong = new JLabel(songName);
-    panelD.add(currentSong);
+    // panelD.add(currentSong);
   }
   
   public void createProgressBar(){

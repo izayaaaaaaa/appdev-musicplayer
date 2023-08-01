@@ -1,3 +1,0 @@
-this branch is for the placeholder frontend so we can work on the functionalities
-
-hello
