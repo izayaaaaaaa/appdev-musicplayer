@@ -65,6 +65,12 @@ public class MP3PlayerView extends JFrame{
 
     mainPanel.add(settingsPanel, c);
 
+    createFolderButton();
+    createSettingsButton();
+    createMinButton();
+    createMaxButton();
+    createExitButton();
+
     // create a list of songs
     String[] dummySongs = {
       "Song 1",
