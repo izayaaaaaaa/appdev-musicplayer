@@ -33,7 +33,7 @@ public class MP3PlayerModel {
   public AudioInputStream songStream ;
   public Clip songClip;
 
-  int s_id = 1;
+  public int s_id = 1;
   
   
   /*
@@ -43,6 +43,7 @@ public class MP3PlayerModel {
   public void fetchSong(int id){
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
     EntityManager em = emf.createEntityManager();
+    
 
     if(id <= -1){
       s_id = 1;
@@ -326,17 +327,17 @@ public class MP3PlayerModel {
 
       songClip.stop();
       em.getTransaction().begin();
-      s_id = s_id + 1;
+      s_id++;
 
-      if(s_id>=recordCount.intValue()+1){
-        s_id = 1;
-      }
+      //Reaches MAX Highest ID
+      if(s_id >= 4 || s_id == 3){
+        s_id=0;
+        System.out.println("Test 1: "+ s_id);
+      } 
 
-      s = em.find(Song.class, s_id);
       fetchSong(s_id);
       songClip.start();
 
-      
 
     } catch (Exception e) {
       // TODO: handle exception
@@ -361,15 +362,17 @@ public class MP3PlayerModel {
 
       songClip.stop();
       em.getTransaction().begin();
-      s_id = s_id - 1;
+      s_id--;
 
-      if(s_id<=0){
-        s_id = recordCount.intValue();
-      }
+      //Reaches MAX Lowest ID
+      if(s_id >= 4 || s_id == -1){
+        s_id=2;
+        System.out.println("Test 1: "+ s_id);
+      } 
 
-      s = em.find(Song.class, s_id);
       fetchSong(s_id);
       songClip.start();
+
       
     } catch (Exception e) {
       // TODO: handle exception

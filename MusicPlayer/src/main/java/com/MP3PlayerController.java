@@ -49,6 +49,8 @@ public class MP3PlayerController {
       else{
         id = selection;
       }
+      
+      System.out.println("Current ID: " + id);
 
       model.fetchSong(id);
       
