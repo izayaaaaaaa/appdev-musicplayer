@@ -1,6 +1,7 @@
 package com;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -10,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.JTextArea;
 
 public class MP3PlayerView extends JFrame{
@@ -26,6 +28,7 @@ public class MP3PlayerView extends JFrame{
   JTable songList;
   JScrollPane sp;
   JProgressBar pb;
+  JLabel logoTitle;
   
   
   public MP3PlayerView() {
@@ -40,7 +43,9 @@ public class MP3PlayerView extends JFrame{
     c.gridy = 0;
     c.gridwidth = 2;
     logoPanel = new JPanel();
-    logoPanel.setBackground(Color.GREEN);
+    // logoPanel.setBackground(Color.GREEN);
+    logoTitle = new JLabel("jukebox");
+    logoPanel.add(logoTitle);
     mainPanel.add(logoPanel, c);
 
     c.gridx = 2;
@@ -59,16 +64,29 @@ public class MP3PlayerView extends JFrame{
     settingsPanel.setBackground(Color.YELLOW);
 
     mainPanel.add(settingsPanel, c);
-    createFolderButton();
-    createSettingsButton();
-    createMinButton();
-    createMaxButton();
-    createExitButton();
+
+    // create a list of songs
+    String[] dummySongs = {
+      "Song 1",
+      "Song 2",
+      "Song 3",
+      "Song 4",
+      "Song 5",
+      "Song 6",
+      "Song 7",
+      "Song 8",
+      "Song 9",
+      "Song 10",
+    };
 
     c.gridx = 0;
     c.gridy = 1;
-    songListPanel = new JPanel();
-    songListPanel.setBackground(Color.ORANGE);
+    c.gridheight = 3;
+    songListPanel = new JPanel(new GridLayout(10, 1));
+    // songListPanel.setBackground(Color.ORANGE);
+    for (int i = 1; i <= 10; i++) {
+      songListPanel.add(new JLabel(dummySongs[i-1]));
+    }
     mainPanel.add(songListPanel, c);
 
     c.gridx = 1;
@@ -76,13 +94,6 @@ public class MP3PlayerView extends JFrame{
     currentlyPlayingPanel = new JPanel();
     currentlyPlayingPanel.setBackground(Color.PINK);
     mainPanel.add(currentlyPlayingPanel, c);
-
-    // createPreviousSongButton();
-    // createBacktrackButton();
-    // createPlayButton();
-    // createPauseButton();
-    // createFastForwardButton();
-    // createNextSongButton();
 
     c.gridx = 2;
     c.gridy = 1;
@@ -96,17 +107,25 @@ public class MP3PlayerView extends JFrame{
 
     c.gridx = 0;
     c.gridy = 2;
+    c.gridheight = 1;
     c.gridwidth = 3;
     bottomPanel = new JPanel();
     bottomPanel.setBackground(Color.MAGENTA);
+    // createPreviousSongButton();
+    // createBacktrackButton();
+    // createPlayButton();
+    // createPauseButton();
+    // createFastForwardButton();
+    // createNextSongButton();
     mainPanel.add(bottomPanel, c);
 
-    this.setLayout(new GridLayout(3, 3));
+    this.setLayout(new GridLayout(5, 3));
     this.add(mainPanel);
     
     this.setTitle("MP3 Player");
+    // this.pack();
     this.setSize(1440, 1024);
-    this.setResizable(false);
+    this.setResizable(true);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setVisible(true);
   }
@@ -189,7 +208,15 @@ public class MP3PlayerView extends JFrame{
 
   
   public void createPlaylist(List<String> playlist) {
-    showPlaylist = new JTable(); 
+    String[] columnNames = {"Song Title"};
+    Object[][] data = new Object[playlist.size()][1];
+
+    for (int i = 0; i < playlist.size(); i++) {
+      data[i][0] = playlist.get(i);
+    }
+
+    showPlaylist = new JTable(data, columnNames);
     sp = new JScrollPane(showPlaylist);
+    songListPanel.add(sp, BorderLayout.CENTER);
   }
 }
