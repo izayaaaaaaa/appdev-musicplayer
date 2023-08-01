@@ -40,7 +40,19 @@ public class MP3PlayerModel {
    * PAUSE MUSIC
    */
 
-  public void AudioProcess(){
+  public void fetchSong(int id){
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
+    EntityManager em = emf.createEntityManager();
+
+    if(id <= -1){
+      s_id = 1;
+    }
+    else{
+      s_id = id;
+    }
+
+
+    s = em.find(Song.class, s_id);
 
     try{
 
@@ -62,8 +74,6 @@ public class MP3PlayerModel {
 
     try {
       em.getTransaction().begin();
-
-      s = em.find(Song.class, s_id);
 
       System.out.println("Song ID:" + s.getId());
 
@@ -105,13 +115,12 @@ public class MP3PlayerModel {
       try {
 
         em.getTransaction().begin();
-
-        s = em.find(Song.class, s_id);
+        fetchSong(s_id);
 
         if (!songSelected) {  
 
           System.out.println("Song Path: " + s.getSongPath());
-          AudioProcess();
+          fetchSong(s_id);
 
           songClip.start();
           songSelected = true;  // Song has been selected
@@ -151,7 +160,6 @@ public class MP3PlayerModel {
 
       em.getTransaction().begin();
 
-      s = em.find(Song.class, s_id);
 
       if(s != null){
 
@@ -206,7 +214,7 @@ public class MP3PlayerModel {
 
       if (s != null){
   
-        AudioProcess();
+        fetchSong(s_id);
 
       }
 
@@ -236,8 +244,6 @@ public class MP3PlayerModel {
         em.getTransaction().begin();
 
       if (s != null){
-
-        s = em.find(Song.class, s_id);
 
         long currentPosition = songClip.getMicrosecondPosition();
         long newPosition = currentPosition + 1000000;
@@ -276,8 +282,6 @@ public class MP3PlayerModel {
       em.getTransaction().begin();
 
       if (s != null){
-
-        s = em.find(Song.class, s_id);
 
         long currentPosition = songClip.getMicrosecondPosition();
         long newPosition = currentPosition - 1000000;
@@ -329,7 +333,7 @@ public class MP3PlayerModel {
       }
 
       s = em.find(Song.class, s_id);
-      AudioProcess();
+      fetchSong(s_id);
       songClip.start();
 
       
@@ -364,7 +368,7 @@ public class MP3PlayerModel {
       }
 
       s = em.find(Song.class, s_id);
-      AudioProcess();
+      fetchSong(s_id);
       songClip.start();
       
     } catch (Exception e) {
