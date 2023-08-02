@@ -4,11 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.sound.sampled.*;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioSystem;
 
 @Entity
 @Table(name = "MusicPlayer")
@@ -94,7 +92,15 @@ public class Song {
     this.lyricsPath = lyricsPath;
   }
 
-  
+  public long getSongDuration() {
+    try {
+      AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(new File(songPath));
+      return fileFormat.getFrameLength() * 1000L / fileFormat.getFormat().getFrameRate();
+    } catch (UnsupportedAudioFileException | IOException e) {
+        e.printStackTrace();
+    }
+    return 0L; // Return 0 if there is an error getting the duration
+  }
 
   // public AudioInputStream getSongStream() {
   //   return songStream;

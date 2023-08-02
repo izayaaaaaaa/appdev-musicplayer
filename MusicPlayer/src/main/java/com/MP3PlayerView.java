@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,6 +17,17 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.Timer;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.MemoryImageSource;
+import java.awt.image.PixelGrabber;
+import java.io.IOException;
+import java.io.InputStream;
+
+// import javafx.event.ActionEvent;
+
 import javax.swing.JTextArea;
 
 public class MP3PlayerView extends JFrame{
@@ -37,11 +49,35 @@ public class MP3PlayerView extends JFrame{
   JScrollPane sp;
   JProgressBar pb;
   JLabel logoTitle;
+
+  ImageIcon staticImageIcon, animatedGifIcon;
+  JLabel playerImageLabel;
+
+  //declare the giftimer
+  Timer gifTimer;
+  int currentFrameIndex = 0;
+
+  private long currentSongDuration;
+  private long currentSongPosition;
+  private boolean isSongPlaying;
   
   
   public MP3PlayerView() {
+    // Load the custom font "Poppins" from the resources folder
+    // try (InputStream fontStream = MP3PlayerView.class.getResourceAsStream("/MusicPlayer/src/main/resources/poppins-bold.ttf")) {
+    //     Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontStream);
+    //     Font customFontBold = customFont.deriveFont(Font.BOLD, 20);
+
+    //     // Set the font of the "jukebox" JLabel to "Poppins"
+    //     logoTitle.setFont(customFontBold);
+
+    //     // ... (other code remains the same)
+    // } catch (IOException | FontFormatException e) {
+    //     e.printStackTrace();
+    // }
+
     mainPanel = new JPanel(new GridBagLayout());
-    // mainPanel.setBackground(Color.BLUE);
+    mainPanel.setBackground(Color.decode("#f3f2de"));;
     GridBagConstraints c = new GridBagConstraints();
     c.weightx = 1;
     c.weighty = 1;
@@ -64,14 +100,14 @@ public class MP3PlayerView extends JFrame{
     settingsPanel = new JPanel(new GridLayout(2, 1));
 
     topSettingsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    topSettingsPanel.setBackground(Color.RED);
+    topSettingsPanel.setBackground(Color.decode("#f3f2de"));;
 
     bottomSettingsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-    bottomSettingsPanel.setBackground(Color.RED);
+    bottomSettingsPanel.setBackground(Color.decode("#f3f2de"));
 
     settingsPanel.add(topSettingsPanel);
     settingsPanel.add(bottomSettingsPanel);
-    settingsPanel.setBackground(Color.YELLOW);
+    settingsPanel.setBackground(Color.decode("#f3f2de"));;
 
     mainPanel.add(settingsPanel, c);
 
@@ -88,38 +124,51 @@ public class MP3PlayerView extends JFrame{
     createSongList();
     songListPanel = new JPanel(new GridLayout(1, 1));
     songListPanel.add(songList);
-    // songListPanel.setBackground(Color.ORANGE);
+    songListPanel.setBackground(Color.decode("#f3f2de"));
     mainPanel.add(songListPanel, c);
 
     c.gridx = 1;
     c.gridy = 1;
-    currentlyPlayingPanel = new JPanel();
-    currentlyPlayingPanel.setBackground(Color.PINK);
+    currentlyPlayingPanel = new JPanel(new BorderLayout());
+    currentlyPlayingPanel.setBackground(Color.decode("#f3f2de"));
+
+    staticImageIcon = new ImageIcon("MusicPlayer/src/main/resources/static.jpg");
+    animatedGifIcon = new ImageIcon("MusicPlayer/src/main/resources/plaka_photoshop_point1.gif");
+    staticImageIcon.setImage(staticImageIcon.getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT));
+    animatedGifIcon.setImage(animatedGifIcon.getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT));
+    playerImageLabel = new JLabel(staticImageIcon);
+
+    currentlyPlayingPanel.add(playerImageLabel, BorderLayout.CENTER);
+
     mainPanel.add(currentlyPlayingPanel, c);
+
+    // Start the timer to control the GIF playback speed
+    int delay = 0; // Adjust the delay to control the playback speed (larger value = slower playback)
+    gifTimer = new Timer(delay, new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        currentFrameIndex = (currentFrameIndex + 1) % animatedGifIcon.getIconWidth();
+        Image frameImage = getCurrentFrame(animatedGifIcon.getImage(), currentFrameIndex);
+        playerImageLabel.setIcon(new ImageIcon(frameImage));
+      }
+    });
+    gifTimer.start(); // Start the timer
 
     c.gridx = 2;
     c.gridy = 1;
     lyricsPanel = new JPanel(new BorderLayout());
-    lyricsPanel.setBackground(Color.CYAN);
+    lyricsPanel.setBackground(Color.decode("#f3f2de"));;
 
     mainPanel.add(lyricsPanel, c);
     createLyricsTextArea();
 
-    c.gridx = 2;
-    c.gridy = 1;
-    lyricsPanel = new JPanel();
-    lyricsPanel.setBackground(Color.CYAN);
-    mainPanel.add(lyricsPanel, c);
-
-
-    /////////////////////////////////////////////////////////////////////////
     //Bottom Panel Area
     c.gridx = 0;
     c.gridy = 4; // Update the gridy value to 4
     c.gridwidth = 3;
     bottomPanel = new JPanel();
     bottomPanel.setLayout(new BorderLayout()); 
-    bottomPanel.setBackground(Color.MAGENTA);
+    bottomPanel.setBackground(Color.decode("#f3f2de"));;
 
     //left padding panel
     createLeftPaddingPanel();
@@ -138,7 +187,7 @@ public class MP3PlayerView extends JFrame{
     
     //Create current currentSongDisplay Panel
     createCurrentSongDisplayPanel();
-    currentSongDisplayPanel.setBackground(Color.ORANGE);
+    currentSongDisplayPanel.setBackground(Color.decode("#f3f2de"));;
 
     //Creat artist image
     createArtistImgLbl();
@@ -149,7 +198,7 @@ public class MP3PlayerView extends JFrame{
     
     //Create playback panel
     createPlayBackPanel();
-    playBackPanel.setBackground(Color.CYAN);
+    playBackPanel.setBackground(Color.decode("#f3f2de"));;
 
     //Create buttons for playback Panel
     createPreviousSongButton();
@@ -187,12 +236,45 @@ public class MP3PlayerView extends JFrame{
     this.setLayout(new GridLayout(1, 3)); // Consider updating the GridLayout to (6, 1) if you want bottomPanel to occupy the entire bottom row
     this.add(mainPanel);
     
+    // set frame color with hex code
     this.setTitle("MP3 Player");
     // this.pack();
     this.setSize(1440, 1024);
     this.setResizable(true);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setVisible(true);
+  }
+
+  // Method to extract the current frame from the GIF image
+  private Image getCurrentFrame(Image image, int frameIndex) {
+    MediaTracker mediaTracker = new MediaTracker(this);
+    mediaTracker.addImage(image, 0);
+    try {
+        mediaTracker.waitForAll();
+    } catch (InterruptedException ex) {
+        ex.printStackTrace();
+    }
+
+    int width = image.getWidth(null);
+    int height = image.getHeight(null);
+    int[] pixels = new int[width * height];
+
+    PixelGrabber pixelGrabber = new PixelGrabber(image, 0, 0, width, height, pixels, 0, width);
+    try {
+        pixelGrabber.grabPixels();
+    } catch (InterruptedException ex) {
+        ex.printStackTrace();
+    }
+
+    int frameWidth = 300; // Adjust this value based on the desired frame width
+    int[] currentFramePixels = new int[frameWidth * height];
+
+    for (int y = 0; y < height; y++) {
+        System.arraycopy(pixels, y * width + frameIndex, currentFramePixels, y * frameWidth, frameWidth);
+    }
+
+    Image currentFrameImage = createImage(new MemoryImageSource(frameWidth, height, currentFramePixels, 0, frameWidth));
+    return currentFrameImage;
   }
 
   public void createSongList(){
@@ -212,9 +294,7 @@ public class MP3PlayerView extends JFrame{
     // Set the data to the JList
     songList.setListData(songTitles);
   }
-
     
-
   public void createSongNameLbl(){
     songNameLbl = new JLabel("Song Title");
   }
@@ -325,6 +405,9 @@ public class MP3PlayerView extends JFrame{
     //CurrentSong Min and Max Duration
     //JProgressbar(min, max)
     pb = new JProgressBar(); //Pass as parameter for current song time duration
+    // pb = new JProgressBar(0, 100);
+    pb.setValue(0);
+    pb.setStringPainted(true);
   }
 
   //public void 

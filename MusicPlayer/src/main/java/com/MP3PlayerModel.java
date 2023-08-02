@@ -20,10 +20,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 // import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 
 public class MP3PlayerModel {
@@ -64,7 +66,7 @@ public class MP3PlayerModel {
 
     s = em.find(Song.class, s_id);
 
-     try {
+    try {
       
       reader = new FileReader(new File(s.getLyricsPath()).getAbsolutePath());
       br = new BufferedReader(reader);
@@ -451,5 +453,18 @@ public class MP3PlayerModel {
     }
   }
 
+  public long getSongDuration() {
+    if (songClip != null) {
+      return songClip.getMicrosecondLength() / 1_000_000; // Convert to seconds
+    }
+    return 0;
+  }
 
+  // Method to get the current position of the currently playing song
+  public long getSongPosition() {
+    if (songClip != null) {
+      return songClip.getMicrosecondPosition() / 1_000_000; // Convert to seconds
+    }
+    return 0;
+  }
 }
