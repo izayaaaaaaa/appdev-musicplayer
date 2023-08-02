@@ -32,6 +32,14 @@ public class PersistSongs {
         s2.setLyricsPath("MusicPlayer/src/main/java/com/lyrics/Hayley Kiyoko - Curious.txt");
         s3.setLyricsPath("None");
 
+        s1.setArtistName("Taylor Swift");
+        s2.setArtistName("Hayley Kiyoko");
+        s3.setArtistName("None");
+
+        s1.setAlbumCover("MusicPlayer/src/main/java/com/cover/Taylor Swift - Anti-Hero.jpg");
+        s2.setAlbumCover("MusicPlayer/src/main/java/com/cover/Hayley Kiyoko - Curious.png");
+        s3.setAlbumCover("None");
+
         Query query = em.createQuery("SELECT COUNT(s) FROM Song s");
         Long recordCount = (Long) query.getSingleResult();
 

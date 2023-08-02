@@ -1,16 +1,22 @@
 package com;
 
+import java.awt.Image;
+
 // connects the physical form to the action
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
 
+import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.ImageIcon;
 // import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -24,6 +30,7 @@ public class MP3PlayerController {
   private MP3PlayerView view;
 
   private Timer songTimer;
+  private BufferedImage imgCover;
 
   public MP3PlayerController(MP3PlayerModel model, MP3PlayerView view) {
     this.model = model;
@@ -76,10 +83,31 @@ public class MP3PlayerController {
           id = selection;
         }
 
+        // try{
+        //    imgCover = ImageIO.read(new File(model.fetchAlbumCover(id)));
+        // }
+
+        //ImageIcon img = new ImageIcon(model.fetchAlbumCover(id));
+        //view.artistImgLbl.setIcon(img);
+
+        System.out.println("FetchAlbum:" + model.fetchAlbumCover(id));
+        ImageIcon icon = new ImageIcon(model.fetchAlbumCover(id));
+        Image img = (icon).getImage().getScaledInstance(view.artistImgLbl.getWidth()+100, 
+                                                        view.artistImgLbl.getHeight()+100, Image.SCALE_SMOOTH);
+
+        icon = new ImageIcon(img);
+        view.artistImgLbl.setIcon(icon);
+
+        //view.artistImgLbl.setIcon(new ImageIcon(model.fetchAlbumCover(id)).getImage().getScaledInstance(imgCover.getWidth(), imgCover.getHeight(), Image.SCALE_SMOOTH));
+        //System.out.println("Image is" + img);
+        
         view.playerImageLabel.setIcon(view.animatedGifIcon);
         view.playBtn.setVisible(false);
         view.pauseBtn.setVisible(true);
         view.lyricsTextArea.setText(model.lyricsProcess(id));
+
+        view.songNameLbl.setText(model.fetchSongName(id));
+        view.artistNameLbl.setText(model.fetchArtistName(id));
 
         model.playMusic();
 
@@ -101,6 +129,7 @@ public class MP3PlayerController {
         timer.scheduleAtFixedRate(progressUpdateTask, 0, 1000);
       }
     }
+    
   }
 
   class pauseListener implements ActionListener {

@@ -12,6 +12,7 @@ import javax.persistence.Query;
 // import javax.sound.sampled.LineUnavailableException;
 // import javax.sound.sampled.UnsupportedAudioFileException;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 // import java.io.IOException;
@@ -26,6 +27,9 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 // import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.ImageIcon;
+
+import javafx.scene.image.Image;
 
 
 public class MP3PlayerModel {
@@ -49,6 +53,26 @@ public class MP3PlayerModel {
   /*
    * PAUSE MUSIC
    */
+
+  // public String fetchArtistName(int id) {
+
+  //   EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
+  //   EntityManager em = emf.createEntityManager();
+
+  //   s = em.find(Song.class, s_id);
+
+  //   return s.getArtistName();
+  // }
+
+  public String fetchAlbumCover(int id){
+
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
+    EntityManager em = emf.createEntityManager();
+
+    s = em.find(Song.class,s_id);
+
+    return s.getAlbumCover();
+  }
 
   public String lyricsProcess(int id){
     
@@ -88,6 +112,8 @@ public class MP3PlayerModel {
     return sb.toString();
 
   }
+
+
 
   public void fetchSong(int id){
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
@@ -467,4 +493,24 @@ public class MP3PlayerModel {
     }
     return 0;
   }
+
+  public String fetchSongName(int id) {
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
+    EntityManager em = emf.createEntityManager();
+
+    s = em.find(Song.class, s_id);
+
+    return s.getSongTitle();
+  }
+
+  public String fetchArtistName(int id) {
+
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
+    EntityManager em = emf.createEntityManager();
+
+    s = em.find(Song.class, s_id);
+
+    return s.getArtistName();
+  }
+
 }

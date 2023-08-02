@@ -32,6 +32,12 @@ public class Song {
   @Column(name = "LyricsPath", nullable = false)
   private String lyricsPath;
 
+  @Column (name = "ArtistName", nullable = false)
+  private String artistName;
+
+  @Column (name = "AlbumCover", nullable = false)
+  private String albumCover;
+
   // private AudioInputStream songStream;
   // private Clip songClip;
   
@@ -51,11 +57,13 @@ public class Song {
   //   // }
   // }
 
-  public Song(int id, String songTitle, String songPath, String lyricsPath) {
+  public Song(int id, String songTitle, String songPath, String lyricsPath, String artistName, String albumCover) {
     this.id = id;
     this.songTitle = songTitle;
     this.songPath = songPath;
     this.lyricsPath = lyricsPath;
+    this.artistName = artistName;
+    this.albumCover = albumCover;
   }
 
   public Song () {
@@ -92,15 +100,34 @@ public class Song {
     this.lyricsPath = lyricsPath;
   }
 
-  public long getSongDuration() {
-    try {
-      AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(new File(songPath));
-      return fileFormat.getFrameLength() * 1000L / fileFormat.getFormat().getFrameRate();
-    } catch (UnsupportedAudioFileException | IOException e) {
-        e.printStackTrace();
-    }
-    return 0L; // Return 0 if there is an error getting the duration
+  public String getArtistName() {
+    return artistName;
   }
+
+  public void setArtistName(String artistName) {
+    this.artistName = artistName;
+  }
+
+  public String getAlbumCover() {
+    return albumCover;
+  }
+
+  public void setAlbumCover(String albumCover) {
+    this.albumCover = albumCover;
+  }
+
+  
+
+
+  // public long getSongDuration() {
+  //   try {
+  //     AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(new File(songPath));
+  //     return fileFormat.getFrameLength() * 1000L / fileFormat.getFormat().getFrameRate();
+  //   } catch (UnsupportedAudioFileException | IOException e) {
+  //       e.printStackTrace();
+  //   }
+  //   return 0L; // Return 0 if there is an error getting the duration
+  // }
 
   // public AudioInputStream getSongStream() {
   //   return songStream;
