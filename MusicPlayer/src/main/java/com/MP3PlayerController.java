@@ -74,6 +74,9 @@ public class MP3PlayerController {
         view.pauseBtn.setVisible(true);
         view.lyricsTextArea.setText(model.lyricsProcess(id));
 
+        Song song = em.find(Song.class, id);
+        
+
         model.playMusic();
       }
     }
