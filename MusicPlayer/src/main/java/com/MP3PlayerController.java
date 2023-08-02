@@ -53,7 +53,6 @@ public class MP3PlayerController {
       System.out.println("Current ID: " + id);
 
       model.fetchSong(id);
-      
     } 
   }
   
@@ -61,8 +60,20 @@ public class MP3PlayerController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == view.playBtn) {
+        int selection = view.songList.getSelectedIndex();
+        int id = 0;
+  
+        if(selection <= -1){
+          id = -1;
+        }
+        else{
+          id = selection;
+        }
+
         view.playBtn.setVisible(false);
         view.pauseBtn.setVisible(true);
+        view.lyricsTextArea.setText(model.lyricsProcess(id));
+
         model.playMusic();
       }
     }
@@ -101,17 +112,9 @@ public class MP3PlayerController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == view.nextSongBtn) {
-        
+     
         model.nextSongMusic();
-        // model.stop(currentSong);
-        // model.songSelected = false;
 
-        // currentSongIndex++;
-        // if (currentSongIndex >= playlist.size()) {
-        //   currentSongIndex = 0;
-        // }
-        // currentSong = playlist.get(currentSongIndex);
-        // model.playMusic(currentSong);
       }
     }
   }
@@ -122,15 +125,7 @@ public class MP3PlayerController {
       if (e.getSource() == view.previousSongBtn) {
 
         model.previousSongMusic();
-        //model.stop(currentSong);
-       //model.songSelected = false;
-
-        //currentSongIndex--;
-        //if (currentSongIndex < 0) {
-        //  currentSongIndex = playlist.size() - 1;
-        //}
-        //currentSong = playlist.get(currentSongIndex);
-        //model.playMusic(currentSong);
+      
       }
     }
   }

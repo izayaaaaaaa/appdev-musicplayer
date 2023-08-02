@@ -254,7 +254,7 @@ public class MP3PlayerView extends JFrame{
   
   public void createLyricsTextArea(){
     
-    lyricsTextArea = new JTextArea("Lyrics Here");
+    lyricsTextArea = new JTextArea();
     lyricsScrollPane = new JScrollPane(lyricsTextArea);
     lyricsPanel.add(lyricsScrollPane, BorderLayout.CENTER);
   }

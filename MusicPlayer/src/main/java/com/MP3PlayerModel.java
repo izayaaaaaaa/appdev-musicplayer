@@ -12,9 +12,13 @@ import javax.persistence.Query;
 // import javax.sound.sampled.LineUnavailableException;
 // import javax.sound.sampled.UnsupportedAudioFileException;
 
+import java.io.BufferedReader;
 import java.io.File;
 // import java.io.IOException;
 // import javax.sound.sampled.*;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -26,12 +30,16 @@ public class MP3PlayerModel {
   Boolean songSelected = false,
           songPaused = false;
   Long currentFrame;
-  Song currentSong;
   String sname;
+  //String lyrics;
 
+  //public String lyrics;
   public Song s;
   public AudioInputStream songStream ;
   public Clip songClip;
+  public FileReader reader;
+  public BufferedReader br;
+  public StringBuffer sb;
 
   public int s_id = 1;
   
@@ -39,6 +47,45 @@ public class MP3PlayerModel {
   /*
    * PAUSE MUSIC
    */
+
+  public String lyricsProcess(int id){
+    
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
+    EntityManager em = emf.createEntityManager();
+
+    int j;
+
+    if(id <= -1){
+      s_id = 1;
+    }
+    else{
+      s_id = id;
+    }
+
+    s = em.find(Song.class, s_id);
+
+     try {
+      
+      reader = new FileReader(new File(s.getLyricsPath()).getAbsolutePath());
+      br = new BufferedReader(reader);
+      sb = new StringBuffer(br.readLine());
+      String storedLyrics = null;
+
+      System.out.println("br read = " + br.read());
+
+      while((storedLyrics = br.readLine())!=null){
+        sb.append(storedLyrics+"\n");
+      }
+
+      br.close();   
+    } catch (Exception e) {
+      // TODO: handle exception
+      e.printStackTrace();
+    } 
+
+    return sb.toString();
+
+  }
 
   public void fetchSong(int id){
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
@@ -52,7 +99,6 @@ public class MP3PlayerModel {
       s_id = id;
     }
 
-
     s = em.find(Song.class, s_id);
 
     try{
@@ -60,7 +106,7 @@ public class MP3PlayerModel {
       songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
       songClip = AudioSystem.getClip();
       songClip.open(songStream);
-      
+
     } catch (Exception ex) {
 
       ex.printStackTrace();
@@ -117,11 +163,18 @@ public class MP3PlayerModel {
 
         em.getTransaction().begin();
         fetchSong(s_id);
+        //lyricsProcess(s_id);
+        
 
         if (!songSelected) {  
 
           System.out.println("Song Path: " + s.getSongPath());
-          fetchSong(s_id);
+          fetchSong(s_id);   
+          // reader = new FileReader(new File(s.getLyricsPath()).getAbsolutePath());
+          // br = new BufferedReader(reader);
+          // System.out.println("Lyrics: "  + br.readLine());
+          // br.close();
+
 
           songClip.start();
           songSelected = true;  // Song has been selected
@@ -131,6 +184,11 @@ public class MP3PlayerModel {
           resumePlay();
         }
 
+        //lyricsProcess(s_id);
+
+        // while(lyricsProcess(s_id) == null){
+        //   break;
+        // }
 
       } catch (Exception ex) {
 
