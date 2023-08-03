@@ -299,6 +299,7 @@ public class MP3PlayerView extends JFrame{
 
     // Set the data to the JList
     songList.setListData(songTitles);
+    songList.setSelectedIndex(0);
   }
     
   public void createSongNameLbl(){
