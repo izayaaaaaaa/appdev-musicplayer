@@ -83,7 +83,7 @@ public class PersistSongs {
     
         s1.setAlbumCover("MusicPlayer/src/main/resources/cover/Ain't It Fun - Paramore.png");
         s2.setAlbumCover("MusicPlayer/src/main/resources/cover/Anti-Hero - Taylor Swift.jpg");
-        s3.setAlbumCover("MusicPlayer/src/main/resources/cover/Blank Space - Taylor Swift.jpg");
+        s3.setAlbumCover("MusicPlayer/src/main/resources/cover/Blank Space - Taylor Swift.png");
         s4.setAlbumCover("MusicPlayer/src/main/resources/cover/Curious - Hayley Kiyoko.jpg");
         s5.setAlbumCover("MusicPlayer/src/main/resources/cover/Decode - Paramore.png");
         // s6.setAlbumCover("MusicPlayer/src/main/resources/cover/Helena - My Chemical Romance.png");
