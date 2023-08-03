@@ -88,13 +88,13 @@ public class MP3PlayerController {
         TimerTask progressUpdateTask = new TimerTask() {
           @Override
           public void run() {
-              // Update the progress bar based on the current position and duration
-              long duration = model.getSongDuration();
-              long position = model.getSongPosition();
-              if (duration > 0) {
-                  int progress = (int) (position * 100 / duration);
-                  view.pb.setValue(progress);
-              }
+            // Update the progress bar based on the current position and duration
+            long duration = model.getSongDuration();
+            long position = model.getSongPosition();
+            if (duration > 0) {
+              int progress = (int) (position * 100 / duration);
+              view.pb.setValue(progress);
+            }
           }
         };
         // Schedule the progress update task to run every 1 second
