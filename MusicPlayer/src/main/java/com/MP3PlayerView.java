@@ -37,7 +37,7 @@ public class MP3PlayerView extends JFrame{
   JPanel topSettingsPanel, bottomSettingsPanel;
   JPanel leftPaddingPanel, rightPaddingPanel, currentSongDisplayPanel, songDetailsPanel, playBackPanel;
 
-  JLabel songNameLbl, artistNameLbl, artistImgLbl;
+  JLabel songNameLbl, artistNameLbl, artistImgLbl, songTitleLabel, songArtistLabel; 
 
   JTextArea lyricsTextArea;
   JScrollPane lyricsScrollPane;
@@ -101,7 +101,7 @@ public class MP3PlayerView extends JFrame{
     
     gbc.gridx = 2;
     gbc.gridy = 0;
-    gbc.weightx = 0.4;
+    gbc.weightx=3;
     mainPanel.add(rightPanel, gbc);
     
     gbc.gridx = 0;
@@ -131,7 +131,7 @@ public class MP3PlayerView extends JFrame{
     this.add(mainPanel);
     // set frame color with hex code
     this.setTitle("MP3 Player");
-    // this.pack();
+    this.pack();
     this.setSize(1440, 1024);
     this.setResizable(false);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -176,7 +176,7 @@ public class MP3PlayerView extends JFrame{
   }
 
   public void createRightPanel() {
-    rightPanel = new JPanel(new BorderLayout());
+    rightPanel = new JPanel(new GridLayout(3,3));
     rightPanel.setBackground(Color.decode("#f2f0db"));
 
     // Create an empty panel for top padding
@@ -201,9 +201,13 @@ public class MP3PlayerView extends JFrame{
     lyricsTextArea.setForeground(Color.BLACK);
 
     rightPanel.setBackground(Color.decode("#f2f0db"));
-    rightPanel.add(topPaddingPanel, BorderLayout.NORTH);
-    rightPanel.add(rightPaddingPanel, BorderLayout.EAST);
-    rightPanel.add(lyricsPanel, BorderLayout.CENTER);
+    rightPanel.add(topPaddingPanel);
+    rightPanel.add(lyricsPanel);
+    //rightPanel.add(rightPaddingPanel);
+  
+    // rightPanel.add(topPaddingPanel, BorderLayout.NORTH);
+    // rightPanel.add(rightPaddingPanel, BorderLayout.EAST);
+    // rightPanel.add(lyricsPanel, BorderLayout.CENTER);
   }
 
   public void createCenterPanel() {
@@ -240,11 +244,11 @@ public class MP3PlayerView extends JFrame{
     southPanel.setPreferredSize(new Dimension(300, 100));
 
     // create a song title label based on currently playing song
-    JLabel songTitleLabel = new JLabel("Song Title");
+    songTitleLabel = new JLabel("Song Title");
     southPanel.add(songTitleLabel);
 
     // create a song artist label
-    JLabel songArtistLabel = new JLabel("Song Artist");
+    songArtistLabel = new JLabel("Song Artist");
     southPanel.add(songArtistLabel);
 
     // add the panels into the currently playing panel
@@ -289,32 +293,38 @@ public class MP3PlayerView extends JFrame{
     pb.setPreferredSize(new Dimension(600, 10));
     
     //Create playback panel
-    playBackPanel =  new JPanel(new FlowLayout());
+    playBackPanel =  new JPanel(new FlowLayout(FlowLayout.CENTER, 25, 0));
     playBackPanel.setBackground(Color.decode("#f0e2be"));;
 
     //Create buttons for playback Panel
     previousSongBtn = new JButton();
-    previousSongBtn.setBackground(Color.decode("#F2CC8F"));
+    previousSongBtn.setBackground(Color.decode("#f0e2be"));
+    previousSongBtn.setBorder(BorderFactory.createEmptyBorder());
     previousSongBtn.setIcon(new ImageIcon("MusicPlayer/src/main/resources/icons/previousIcon.png"));
    
     backtrackBtn = new JButton();
-    backtrackBtn.setBackground(Color.decode("#F2CC8F"));
+    backtrackBtn.setBackground(Color.decode("#f0e2be"));
+    backtrackBtn.setBorder(BorderFactory.createEmptyBorder());
     backtrackBtn.setIcon(new ImageIcon("MusicPlayer/src/main/resources/icons/backtrackIcon.png"));
 
     playBtn = new JButton();
-    playBtn.setBackground(Color.decode("#F2CC8F"));
+    playBtn.setBackground(Color.decode("#f0e2be"));
+    playBtn.setBorder(BorderFactory.createEmptyBorder());
     playBtn.setIcon(new ImageIcon("MusicPlayer/src/main/resources/icons/playIcon.png"));
 
     pauseBtn = new JButton();
-    pauseBtn.setBackground(Color.decode("#F2CC8F"));
+    pauseBtn.setBackground(Color.decode("#f0e2be"));
+    pauseBtn.setBorder(BorderFactory.createEmptyBorder());
     pauseBtn.setIcon(new ImageIcon("MusicPlayer/src/main/resources/icons/pauseIcon.png"));
 
     fastForwardBtn = new JButton();
-    fastForwardBtn.setBackground(Color.decode("#F2CC8F"));
+    fastForwardBtn.setBackground(Color.decode("#f0e2be"));
+    fastForwardBtn.setBorder(BorderFactory.createEmptyBorder());
     fastForwardBtn.setIcon(new ImageIcon("MusicPlayer/src/main/resources/icons/fastforwardIcon.png"));
 
     nextSongBtn = new JButton();
-    nextSongBtn.setBackground(Color.decode("#F2CC8F"));
+    nextSongBtn.setBackground(Color.decode("#f0e2be"));
+    nextSongBtn.setBorder(BorderFactory.createEmptyBorder());
     nextSongBtn.setIcon(new ImageIcon("MusicPlayer/src/main/resources/icons/nextIcon.png"));
 
     //Add all buttons into the playback panel
