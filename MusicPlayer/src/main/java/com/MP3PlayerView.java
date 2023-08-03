@@ -1,9 +1,8 @@
 package com;
 
+// import javafx.event.ActionEvent;
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.io.InputStream;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.MemoryImageSource;
@@ -13,24 +12,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-
-// import javafx.event.ActionEvent;
-
-import javax.swing.JTextArea;
-import javax.swing.Timer;
-import javax.swing.border.Border;
-
-import javafx.scene.text.Font;
+import javax.swing.plaf.basic.BasicProgressBarUI;
 
 public class MP3PlayerView extends JFrame{
   JPanel mainPanel, leftPanel, logoPanel, songListPanel, centerPanel, currentlyPlayingPanel, rightPanel, settingsPanel, lyricsPanel, bottomPanel;
@@ -59,75 +41,21 @@ public class MP3PlayerView extends JFrame{
   int currentFrameIndex = 0;
 
   ImageIcon logoIcon;
-
-  // private long currentSongDuration;
-  // private long currentSongPosition;
-  // private boolean isSongPlaying;
   
   
   public MP3PlayerView() {
-    // Load the custom font "Poppins" from the resources folder
-    // try (InputStream fontStream = MP3PlayerView.class.getResourceAsStream("/MusicPlayer/src/main/resources/poppins-bold.ttf")) {
-    //     Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontStream);
-    //     Font customFontBold = customFont.deriveFont(Font.BOLD, 20);
-
-    //     // Set the font of the "jukebox" JLabel to "Poppins"
-    //     logoTitle.setFont(customFontBold);
-
-    //     // ... (other code remains the same)
-    // } catch (IOException | FontFormatException e) {
-    //     e.printStackTrace();
-    // }
-
-    mainPanel = new JPanel(new GridBagLayout());
-    GridBagConstraints gbc = new GridBagConstraints();
+    mainPanel = new JPanel(new BorderLayout());
 
     createLeftPanel();
     createCenterPanel();
     createRightPanel();
     createBottomPanel();
 
-    gbc.gridx = 0;
-    gbc.gridy = 0;
-    gbc.fill = GridBagConstraints.BOTH;
-    gbc.weightx = 0.2;
-    gbc.weighty = 0.9;
-    mainPanel.add(leftPanel, gbc);
+    mainPanel.add(leftPanel, BorderLayout.WEST);
+    mainPanel.add(centerPanel, BorderLayout.CENTER);
+    mainPanel.add(rightPanel, BorderLayout.EAST);
+    mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 
-    gbc.gridx = 1;
-    gbc.gridy = 0;
-    gbc.weightx = 0.4;
-    mainPanel.add(centerPanel, gbc);
-    
-    gbc.gridx = 2;
-    gbc.gridy = 0;
-    gbc.weightx=3;
-    mainPanel.add(rightPanel, gbc);
-    
-    gbc.gridx = 0;
-    gbc.gridy = 1;
-    gbc.weighty = 0.1;
-    gbc.gridwidth = 3;
-    mainPanel.add(bottomPanel, gbc);
-
-    // settingsPanel = new JPanel(new GridLayout(2, 1));
-
-    // topSettingsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    // topSettingsPanel.setBackground(Color.decode("#f3f2de"));;
-
-    // bottomSettingsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-    // bottomSettingsPanel.setBackground(Color.decode("#f3f2de"));
-
-    // settingsPanel.add(topSettingsPanel);
-    // settingsPanel.add(bottomSettingsPanel);
-    // settingsPanel.setBackground(Color.decode("#f3f2de"));;
-
-    // // mainPanel.add(settingsPanel, c);
-
-    // createFolderButton();
-    // createSettingsButton();
-    
-    // this.setLayout(new GridLayout(1, 3)); // Consider updating the GridLayout to (6, 1) if you want bottomPanel to occupy the entire bottom row
     this.add(mainPanel);
     // set frame color with hex code
     this.setTitle("MP3 Player");
@@ -142,15 +70,9 @@ public class MP3PlayerView extends JFrame{
     leftPanel = new JPanel(new GridBagLayout());
     leftPanel.setBackground(Color.decode("#f0e2be"));
 
-    // Set the "Verdana" font with size 24
-    // Font customFont24 = new Font("Verdana", Font.PLAIN, 24);
-
     logoTitle = new JLabel();    
-    logoIcon = new ImageIcon(ClassLoader.getSystemResource("jukebox.png"));
-    // // set size
-    // logoIcon = new ImageIcon(logoIcon.getImage().getScaledInstance(400, 300, Image.SCALE_DEFAULT));
+    logoIcon = new ImageIcon(ClassLoader.getSystemResource("jukebox (1).png"));
     logoTitle.setIcon(logoIcon);
-    // setbackground to white
     logoTitle.setBackground(Color.WHITE);
 
     createSongList();
@@ -165,49 +87,57 @@ public class MP3PlayerView extends JFrame{
     
     gbc.gridx = 0;
     gbc.gridy = 1;
-    // gbc.insets = new Insets(10, 0, 10, 0);
-    gbc.anchor = GridBagConstraints.CENTER;
-    gbc.fill = GridBagConstraints.HORIZONTAL;
-    songListPanel.setBackground(Color.BLACK);
-    
-    // set size of songlistpanel to leftpanel
-    // songListPanel.setPreferredSize(new Dimension(300, 300));
-    leftPanel.add(songListPanel, gbc);
+    gbc.anchor = GridBagConstraints.NORTH;
+
+    leftPanel.add(songList, gbc);
   }
 
   public void createRightPanel() {
-    rightPanel = new JPanel(new GridLayout(3,3));
+    rightPanel = new JPanel(new BorderLayout());
     rightPanel.setBackground(Color.decode("#f2f0db"));
 
     // Create an empty panel for top padding
     JPanel topPaddingPanel = new JPanel();
-    // topPaddingPanel.setPreferredSize(new Dimension(1, 20));
     topPaddingPanel.setOpaque(false);
+    topPaddingPanel.setPreferredSize(new Dimension(500, 220));
+
+    JPanel bottomPaddingPanel = new JPanel();
+    bottomPaddingPanel.setOpaque(false);
+    bottomPaddingPanel.setPreferredSize(new Dimension(520, 220));
 
     // create an empty panel for rightside padding
     JPanel rightPaddingPanel = new JPanel();
-    // rightPaddingPanel.setPreferredSize(new Dimension(100, 1));
     rightPaddingPanel.setOpaque(false);
+    rightPaddingPanel.setPreferredSize(new Dimension(20, 0));
+
+    JPanel leftPaddingPanel = new JPanel();
+    leftPaddingPanel.setOpaque(false);
+    leftPaddingPanel.setPreferredSize(new Dimension(10, 0));
 
     lyricsPanel = new JPanel(new BorderLayout());
-    lyricsPanel.setBackground(Color.decode("#f3f2de"));;
+    lyricsPanel.setBackground(Color.decode("#f3f2de"));
 
-    lyricsTextArea = new JTextArea();
+    lyricsTextArea = new JTextArea("Please Select a Song");
     lyricsScrollPane = new JScrollPane(lyricsTextArea);
+    lyricsScrollPane.setOpaque(false);
+    lyricsScrollPane.setBorder(BorderFactory.createLineBorder(Color.decode("#f2f0db")));
     lyricsPanel.add(lyricsScrollPane, BorderLayout.CENTER);
 
     // set the lyrics background color to be the same as the right panel and text should be black
     lyricsTextArea.setBackground(Color.decode("#f2f0db"));
     lyricsTextArea.setForeground(Color.BLACK);
+    lyricsTextArea.setBorder(BorderFactory.createLineBorder(Color.decode("#f2f0db")));
+    lyricsTextArea.setFont(new Font("Arial", Font.PLAIN, 15));
+    lyricsTextArea.setEditable(false);
+    lyricsTextArea.setAlignmentX(Component.CENTER_ALIGNMENT);
+    
 
     rightPanel.setBackground(Color.decode("#f2f0db"));
-    rightPanel.add(topPaddingPanel);
-    rightPanel.add(lyricsPanel);
-    //rightPanel.add(rightPaddingPanel);
-  
-    // rightPanel.add(topPaddingPanel, BorderLayout.NORTH);
-    // rightPanel.add(rightPaddingPanel, BorderLayout.EAST);
-    // rightPanel.add(lyricsPanel, BorderLayout.CENTER);
+    rightPanel.add(leftPaddingPanel, BorderLayout.WEST);
+    rightPanel.add(bottomPaddingPanel, BorderLayout.SOUTH);
+    rightPanel.add(topPaddingPanel, BorderLayout.NORTH);
+    rightPanel.add(rightPaddingPanel, BorderLayout.EAST);
+    rightPanel.add(lyricsPanel, BorderLayout.CENTER);
   }
 
   public void createCenterPanel() {
@@ -221,7 +151,6 @@ public class MP3PlayerView extends JFrame{
     animatedGifIcon.setImage(animatedGifIcon.getImage().getScaledInstance(620, 450, Image.SCALE_DEFAULT));
     playerImageLabel = new JLabel(staticImageIcon);
 
-    // Start the timer to control the GIF playback speed
     int delay = 0; // Adjust the delay to control the playback speed (larger value = slower playback)
     gifTimer = new Timer(delay, new ActionListener() {
       @Override
@@ -231,29 +160,14 @@ public class MP3PlayerView extends JFrame{
         playerImageLabel.setIcon(new ImageIcon(frameImage));
       }
     });
-    // gifTimer.start(); // Start the timer
 
     // create an empty north panel
     JPanel emptyNorthPanel = new JPanel();
     emptyNorthPanel.setBackground(Color.decode("#f3f2de"));
     emptyNorthPanel.setPreferredSize(new Dimension(200, 250));
 
-    // create a south panel with 2 rows of jlabel
-    JPanel southPanel = new JPanel(new GridLayout(2, 1));
-    southPanel.setBackground(Color.decode("#f3f2de"));
-    southPanel.setPreferredSize(new Dimension(300, 100));
-
-    // create a song title label based on currently playing song
-    songTitleLabel = new JLabel("Song Title");
-    southPanel.add(songTitleLabel);
-
-    // create a song artist label
-    songArtistLabel = new JLabel("Song Artist");
-    southPanel.add(songArtistLabel);
-
     // add the panels into the currently playing panel
     currentlyPlayingPanel.add(emptyNorthPanel, BorderLayout.NORTH);
-    currentlyPlayingPanel.add(southPanel, BorderLayout.SOUTH);
 
     currentlyPlayingPanel.add(playerImageLabel, BorderLayout.CENTER);
     centerPanel.add(currentlyPlayingPanel);
@@ -275,9 +189,14 @@ public class MP3PlayerView extends JFrame{
     //Song details panel
     songDetailsPanel = new JPanel(new GridLayout(2, 0));
     songNameLbl = new JLabel("Song Name");
+    songNameLbl.setOpaque(false);
+    songNameLbl.setFont(new Font("Poppins", Font.BOLD, 20));
     artistNameLbl = new JLabel("Artist Name");
+    artistNameLbl.setOpaque(false);
+    artistNameLbl.setFont(new Font("Poppins", Font.PLAIN, 12));
 
     //Add contnent for song details
+    songDetailsPanel.setOpaque(false);
     songDetailsPanel.add(songNameLbl);
     songDetailsPanel.add(artistNameLbl);
     
@@ -290,11 +209,13 @@ public class MP3PlayerView extends JFrame{
 
     //Set the progress bar
     createProgressBar();
-    pb.setPreferredSize(new Dimension(600, 10));
-    
+    pb.setPreferredSize(new Dimension(600, 15));
+    pb.setStringPainted(false);
+    pb.setUI(new CustomProgressBarUI());
+
     //Create playback panel
     playBackPanel =  new JPanel(new FlowLayout(FlowLayout.CENTER, 25, 0));
-    playBackPanel.setBackground(Color.decode("#f0e2be"));;
+    playBackPanel.setBackground(Color.decode("#f0e2be"));
 
     //Create buttons for playback Panel
     previousSongBtn = new JButton();
@@ -347,6 +268,33 @@ public class MP3PlayerView extends JFrame{
     bottomPanel.setBackground(Color.decode("#f0e2be"));
   }
 
+  class CustomProgressBarUI extends BasicProgressBarUI {
+    @Override
+    protected void paintDeterminate(Graphics g, JComponent c) {
+        Graphics2D g2d = (Graphics2D) g;
+
+        // Get the current value and bounds of the progress bar
+        int value = pb.getValue();
+        int width = pb.getWidth();
+        int height = pb.getHeight();
+
+        // Calculate the width of the filled portion
+        int fillWidth = (int) (width * value / 100.0);
+
+        // Define the colors for the progress bar
+        Color background = Color.decode("#D9D9D9");
+        Color foreground = Color.decode("#3d405b");
+
+        // Draw the background
+        g2d.setColor(background);
+        g2d.fillRect(0, 0, width, height);
+
+        // Draw the filled portion
+        g2d.setColor(foreground);
+        g2d.fillRect(0, 0, fillWidth, height);
+    }
+  }
+
   public void createSongList() {
     songListPanel = new JPanel();
     songListPanel.setBackground(Color.decode("#f0e2be"));
@@ -363,11 +311,39 @@ public class MP3PlayerView extends JFrame{
         songTitles[i] = song.getSongTitle();
     }
 
+    songList.setCellRenderer(new CustomListCellRenderer());
     // Set the data to the JList
     songList.setListData(songTitles);
     songList.setSelectedIndex(0);
-    songListPanel.add(songList);
+    songList.setBackground(Color.decode("#f0e2be"));
+    songList.setPreferredSize(new Dimension(100, 500));
+    songList.setFixedCellHeight(100);
+    songList.setFixedCellWidth(20);
   }
+
+  class CustomListCellRenderer extends DefaultListCellRenderer {
+    @Override
+    public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                                                  boolean isSelected, boolean cellHasFocus) {
+        Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+        // Set the foreground color based on the selection
+        if (isSelected) {
+            component.setFont(new Font("Poppins", Font.BOLD, 15));
+            component.setBackground(list.getBackground());
+            if (cellHasFocus) {
+              list.setSelectionBackground(list.getBackground());
+              list.setSelectionForeground(list.getForeground());
+              ((JComponent) component).setBorder(null);
+          }
+
+        } else {
+            component.setFont(new Font("Poppins", Font.PLAIN, 12));
+        }
+
+        return component;
+    }
+}
   
   // Method to extract the current frame from the GIF image
   private Image getCurrentFrame(Image image, int frameIndex) {
@@ -402,21 +378,8 @@ public class MP3PlayerView extends JFrame{
     return currentFrameImage;
   }
 
-  // public void createFolderButton(){
-  //   folderBtn = new JButton("Folder");
-  //   bottomSettingsPanel.add(folderBtn);
-  // }
-
-  // public void createSettingsButton(){
-  //   settingsBtn = new JButton("Settings");
-  //   bottomSettingsPanel.add(settingsBtn);
-  // }
-
   public void createProgressBar(){
-    //CurrentSong Min and Max Duration
-    //JProgressbar(min, max)
     pb = new JProgressBar(); //Pass as parameter for current song time duration
-    // pb = new JProgressBar(0, 100);
     pb.setValue(0);
     pb.setStringPainted(true);
   }

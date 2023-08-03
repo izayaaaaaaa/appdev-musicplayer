@@ -1,37 +1,16 @@
 package com;
 
-// action words
-// import java.util.List;
-
-// import java.io.IOException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
-// import javax.sound.sampled.LineUnavailableException;
-// import javax.sound.sampled.UnsupportedAudioFileException;
-
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
-// import java.io.IOException;
-// import javax.sound.sampled.*;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-
-import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-// import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.ImageIcon;
-
-// import javafx.scene.image.Image;
-
-
 public class MP3PlayerModel {
   Boolean songSelected = false,
           songPaused = false,
@@ -39,9 +18,7 @@ public class MP3PlayerModel {
 
   Long currentFrame;
   String sname;
-  //String lyrics;
 
-  //public String lyrics;
   public AudioInputStream songStream ;
   public Clip songClip;
   public FileReader reader;
@@ -50,11 +27,7 @@ public class MP3PlayerModel {
 
   public int s_id;
   
-  
-  /*
-   * PAUSE MUSIC
-   */
-
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public void indexChanged(int id){
     if(s_id != id){
       songChanged = true;
@@ -62,13 +35,13 @@ public class MP3PlayerModel {
     }
   }
 
-  //////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public void fetchID(int id){    
     //Set to first song of no specific song has been selected
     s_id = id;
   }
 
-  /////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public Song getSong(){
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
     EntityManager em = emf.createEntityManager();
@@ -94,12 +67,14 @@ public class MP3PlayerModel {
     return s;
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public String fetchAlbumCover(int id){
     Song s = getSong();
 
     return s.getAlbumCover();
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public String lyricsProcess(int id){
     Song s = getSong();
 
@@ -126,7 +101,7 @@ public class MP3PlayerModel {
 
   }
 
-
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public void playMusic() {
     System.out.println("Music played: s_id " + s_id);
 
@@ -142,7 +117,7 @@ public class MP3PlayerModel {
     }
   }
 
-
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public void pauseMusic(){
     Song s = getSong();
 
@@ -154,6 +129,7 @@ public class MP3PlayerModel {
     }
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public void resumePlay() {
     Song s = getSong();
     if (s != null) {
@@ -174,6 +150,7 @@ public class MP3PlayerModel {
     }
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public void fastForwardMusic() {
     Song s = getSong();
     if (s != null){
@@ -190,6 +167,7 @@ public class MP3PlayerModel {
     }
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public void backtrackMusic() {
     Song s = getSong();
     if (s != null){
@@ -205,7 +183,7 @@ public class MP3PlayerModel {
     }
   }
 
-
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public void stop() {
     if (songClip != null && songClip.isRunning()) {
       songClip.setMicrosecondPosition(0);
@@ -224,6 +202,7 @@ public class MP3PlayerModel {
     }
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public long getSongDuration() {
     if (songClip != null) {
       return songClip.getMicrosecondLength() / 1_000_000; // Convert to seconds
@@ -231,6 +210,7 @@ public class MP3PlayerModel {
     return 0;
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // Method to get the current position of the currently playing song
   public long getSongPosition() {
     if (songClip != null) {
@@ -239,12 +219,14 @@ public class MP3PlayerModel {
     return 0;
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public String fetchSongName(int id) {
     Song s = getSong();
 
     return s.getSongTitle();
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public String fetchArtistName(int id) {
     Song s = getSong();
 

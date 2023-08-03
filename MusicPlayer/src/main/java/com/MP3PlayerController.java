@@ -1,36 +1,18 @@
 package com;
 
 import java.awt.Image;
-
-// connects the physical form to the action
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.TimerTask;
-
-import javax.imageio.ImageIO;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.swing.ImageIcon;
-// import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import java.util.Timer;
 
-// import javax.swing.Action;
-
 public class MP3PlayerController {
   private MP3PlayerModel model;
   private MP3PlayerView view;
-
-  private Timer songTimer;
-  private BufferedImage imgCover;
 
   public MP3PlayerController(MP3PlayerModel model, MP3PlayerView view) {
     this.model = model;
@@ -71,9 +53,6 @@ public class MP3PlayerController {
 
         view.artistNameLbl.setText(model.fetchArtistName(id));
 
-        view.songTitleLabel.setText(model.fetchSongName(id));
-        view.songArtistLabel.setText(model.fetchArtistName(id));
-
         
       }
 
@@ -94,7 +73,7 @@ public class MP3PlayerController {
         view.pauseBtn.setVisible(true);
 
         ImageIcon icon = new ImageIcon(model.fetchAlbumCover(id));
-        Image img = (icon).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        Image img = (icon).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 
         System.out.println("Image Width: " + view.artistImgLbl.getHeight());
 
@@ -104,8 +83,6 @@ public class MP3PlayerController {
         view.playerImageLabel.setIcon(view.animatedGifIcon); //Start Animating Plaka
         view.songNameLbl.setText(model.fetchSongName(id)); //Fetch Song Name
         view.artistNameLbl.setText(model.fetchArtistName(id)); //Fetch Artist Name
-        view.songTitleLabel.setText(model.fetchSongName(id));
-        view.songArtistLabel.setText(model.fetchArtistName(id));
 
         model.playMusic();
 
@@ -184,8 +161,6 @@ public class MP3PlayerController {
         view.playerImageLabel.setIcon(view.staticImageIcon);
         view.songNameLbl.setText(model.fetchSongName(id));
         view.artistNameLbl.setText(model.fetchArtistName(id));
-        view.songTitleLabel.setText(model.fetchSongName(id));
-        view.songArtistLabel.setText(model.fetchArtistName(id));
       }
     }
   }
@@ -214,8 +189,6 @@ public class MP3PlayerController {
         view.playerImageLabel.setIcon(view.staticImageIcon);
         view.songNameLbl.setText(model.fetchSongName(id));
         view.artistNameLbl.setText(model.fetchArtistName(id));
-        view.songTitleLabel.setText(model.fetchSongName(id));
-        view.songArtistLabel.setText(model.fetchArtistName(id));
       }
     }
   }
