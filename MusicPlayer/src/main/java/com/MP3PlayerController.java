@@ -1,16 +1,22 @@
 package com;
 
+import java.awt.Image;
+
 // connects the physical form to the action
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
 
+import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.ImageIcon;
 // import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -24,6 +30,7 @@ public class MP3PlayerController {
   private MP3PlayerView view;
 
   private Timer songTimer;
+  private BufferedImage imgCover;
 
   public MP3PlayerController(MP3PlayerModel model, MP3PlayerView view) {
     this.model = model;
@@ -46,19 +53,28 @@ public class MP3PlayerController {
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-      int selection = view.songList.getSelectedIndex();
-      int id = 0;
-
-      if(selection <= -1){
-        id = -1;
-      }
-      else{
-        id = selection;
-      }
+      int id = view.songList.getSelectedIndex();
+      System.out.println("Current ID: " + view.songList.getSelectedIndex());
       
-      System.out.println("Current ID: " + id);
+      if(!e.getValueIsAdjusting() || model.songClip.isRunning() || view.songList.getSelectedIndex() >= 0 ){
+        model.stop();
+        view.playBtn.setVisible(true);
+        view.pauseBtn.setVisible(false);
+        ImageIcon icon = new ImageIcon(model.fetchAlbumCover(id));
+        Image img = (icon).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 
-      model.fetchSong(id);
+        view.lyricsTextArea.setText(model.lyricsProcess(id));
+        icon = new ImageIcon(img);
+        view.artistImgLbl.setIcon(icon);
+        view.playerImageLabel.setIcon(view.staticImageIcon);
+        view.songNameLbl.setText(model.fetchSongName(id));
+        view.artistNameLbl.setText(model.fetchArtistName(id));
+      }
+
+    
+
+      model.indexChanged(view.songList.getSelectedIndex());
+      model.fetchID(view.songList.getSelectedIndex());
     } 
   }
   
@@ -66,20 +82,20 @@ public class MP3PlayerController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == view.playBtn) {
-        int selection = view.songList.getSelectedIndex();
-        int id = 0;
-  
-        if(selection <= -1){
-          id = -1;
-        }
-        else{
-          id = selection;
-        }
+         int id = view.songList.getSelectedIndex();
 
-        view.playerImageLabel.setIcon(view.animatedGifIcon);
         view.playBtn.setVisible(false);
         view.pauseBtn.setVisible(true);
-        view.lyricsTextArea.setText(model.lyricsProcess(id));
+
+        ImageIcon icon = new ImageIcon(model.fetchAlbumCover(id));
+        Image img = (icon).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
+        view.lyricsTextArea.setText(model.lyricsProcess(id)); //Lyrics
+        icon = new ImageIcon(img); //Album Cover
+        view.artistImgLbl.setIcon(icon); //Set Album Cover
+        view.playerImageLabel.setIcon(view.animatedGifIcon); //Start Animating Plaka
+        view.songNameLbl.setText(model.fetchSongName(id)); //Fetch Song Name
+        view.artistNameLbl.setText(model.fetchArtistName(id)); //Fetch Artist Name
 
         model.playMusic();
 
@@ -101,6 +117,7 @@ public class MP3PlayerController {
         timer.scheduleAtFixedRate(progressUpdateTask, 0, 1000);
       }
     }
+    
   }
 
   class pauseListener implements ActionListener {
@@ -137,8 +154,26 @@ public class MP3PlayerController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == view.nextSongBtn) {
-        model.nextSongMusic();
+        int id = view.songList.getSelectedIndex();
+        int nextIndex = view.songList.getSelectedIndex() + 1;
+        int listSize = view.songList.getModel().getSize() - 1;
 
+        if(nextIndex > listSize){
+          view.songList.setSelectedIndex(0);
+        }
+        else{
+          view.songList.setSelectedIndex(nextIndex);
+        }
+
+        ImageIcon icon = new ImageIcon(model.fetchAlbumCover(id));
+        Image img = (icon).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
+        view.lyricsTextArea.setText(model.lyricsProcess(id));
+        icon = new ImageIcon(img);
+        view.artistImgLbl.setIcon(icon);
+        view.playerImageLabel.setIcon(view.staticImageIcon);
+        view.songNameLbl.setText(model.fetchSongName(id));
+        view.artistNameLbl.setText(model.fetchArtistName(id));
       }
     }
   }
@@ -147,9 +182,26 @@ public class MP3PlayerController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == view.previousSongBtn) {
+        int id = view.songList.getSelectedIndex();
+        int prevIndex = view.songList.getSelectedIndex() - 1;
+        int listSize = view.songList.getModel().getSize() - 1;
 
-        model.previousSongMusic();
-      
+          if(prevIndex < 0){
+            view.songList.setSelectedIndex(listSize);
+          }
+          else{
+            view.songList.setSelectedIndex(prevIndex);
+          }
+
+        ImageIcon icon = new ImageIcon(model.fetchAlbumCover(id));
+        Image img = (icon).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
+        view.lyricsTextArea.setText(model.lyricsProcess(id));
+        icon = new ImageIcon(img);
+        view.artistImgLbl.setIcon(icon);
+        view.playerImageLabel.setIcon(view.staticImageIcon);
+        view.songNameLbl.setText(model.fetchSongName(id));
+        view.artistNameLbl.setText(model.fetchArtistName(id));
       }
     }
   }

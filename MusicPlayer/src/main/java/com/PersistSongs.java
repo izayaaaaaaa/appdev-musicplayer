@@ -14,23 +14,30 @@ public class PersistSongs {
 
         Song s1 = new Song();
         Song s2 = new Song();
-        Song s3 = new Song();
+      
 
         s1.setId(0);
         s2.setId(1);
-        s3.setId(2);
-
+      
         s1.setSongTitle("Anti-Hero");
         s2.setSongTitle("Curious");
-        s3.setSongTitle("Sex (with my ex)");
+     
 
         s1.setSongPath("MusicPlayer/src/main/java/com/songs/Anti-Hero - Taylor Swift.wav");
         s2.setSongPath("MusicPlayer/src/main/java/com/songs/Curious - Hayley Kiyoko.wav");
-        s3.setSongPath("MusicPlayer/src/main/java/com/songs/Sex (with my ex) - Fletcher.wav");
+       
         
         s1.setLyricsPath("MusicPlayer/src/main/java/com/lyrics/Taylor Swift - Anti-Hero.txt");
         s2.setLyricsPath("MusicPlayer/src/main/java/com/lyrics/Hayley Kiyoko - Curious.txt");
-        s3.setLyricsPath("None");
+     
+
+        s1.setArtistName("Taylor Swift");
+        s2.setArtistName("Hayley Kiyoko");
+    
+
+        s1.setAlbumCover("MusicPlayer/src/main/java/com/cover/Taylor Swift - Anti-Hero.jpg");
+        s2.setAlbumCover("MusicPlayer/src/main/java/com/cover/Hayley Kiyoko - Curious.png");
+       
 
         Query query = em.createQuery("SELECT COUNT(s) FROM Song s");
         Long recordCount = (Long) query.getSingleResult();
@@ -41,7 +48,6 @@ public class PersistSongs {
             System.out.println("The table is empty.");
             em.persist(s1);
             em.persist(s2);
-            em.persist(s3);
 
             em.getTransaction().commit();   //commit changes to the table
         }     

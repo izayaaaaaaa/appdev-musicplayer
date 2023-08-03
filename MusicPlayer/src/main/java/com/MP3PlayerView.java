@@ -1,12 +1,24 @@
 package com;
 
-import java.awt.*;
-import java.util.ArrayList;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.MemoryImageSource;
+import java.awt.image.PixelGrabber;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,19 +28,12 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.Timer;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.MemoryImageSource;
-import java.awt.image.PixelGrabber;
-import java.io.IOException;
-import java.io.InputStream;
 
 // import javafx.event.ActionEvent;
 
 import javax.swing.JTextArea;
+import javax.swing.Timer;
+import javax.swing.border.Border;
 
 public class MP3PlayerView extends JFrame{
   JPanel mainPanel, logoPanel, settingsPanel, songListPanel, currentlyPlayingPanel, lyricsPanel, bottomPanel;
@@ -238,7 +243,7 @@ public class MP3PlayerView extends JFrame{
     
     // set frame color with hex code
     this.setTitle("MP3 Player");
-    // this.pack();
+    this.pack();
     this.setSize(1440, 1024);
     this.setResizable(true);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -247,6 +252,7 @@ public class MP3PlayerView extends JFrame{
 
   // Method to extract the current frame from the GIF image
   private Image getCurrentFrame(Image image, int frameIndex) {
+
     MediaTracker mediaTracker = new MediaTracker(this);
     mediaTracker.addImage(image, 0);
     try {
@@ -293,6 +299,7 @@ public class MP3PlayerView extends JFrame{
 
     // Set the data to the JList
     songList.setListData(songTitles);
+    songList.setSelectedIndex(0);
   }
     
   public void createSongNameLbl(){
@@ -304,8 +311,12 @@ public class MP3PlayerView extends JFrame{
   }
 
   public void createArtistImgLbl(){
-    artistImgLbl = new JLabel("Image Here");
-    artistImgLbl.setSize(50, 50);
+    artistImgLbl = new JLabel();
+    // Border round = BorderFactory.createLineBorder(Color.BLACK, 10, true);
+    // artistImgLbl.setBorder(round);
+   //artistImgLbl.
+   
+    //artistImgLbl.setSize(50, 50);
   }
 
   public void createLeftPaddingPanel(){
