@@ -58,6 +58,8 @@ public class MP3PlayerView extends JFrame{
   Timer gifTimer;
   int currentFrameIndex = 0;
 
+  ImageIcon logoIcon;
+
   // private long currentSongDuration;
   // private long currentSongPosition;
   // private boolean isSongPlaying;
@@ -129,9 +131,9 @@ public class MP3PlayerView extends JFrame{
     this.add(mainPanel);
     // set frame color with hex code
     this.setTitle("MP3 Player");
-    this.pack();
-    //this.setSize(1440, 1024);
-    // this.setResizable(true);
+    // this.pack();
+    this.setSize(1440, 1024);
+    this.setResizable(false);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setVisible(true);
   }
@@ -143,8 +145,13 @@ public class MP3PlayerView extends JFrame{
     // Set the "Verdana" font with size 24
     // Font customFont24 = new Font("Verdana", Font.PLAIN, 24);
 
-    logoTitle = new JLabel("jukebox");    
-    // logoTitle.setFont(customFont24);    
+    logoTitle = new JLabel();    
+    logoIcon = new ImageIcon(ClassLoader.getSystemResource("jukebox.png"));
+    // // set size
+    // logoIcon = new ImageIcon(logoIcon.getImage().getScaledInstance(400, 300, Image.SCALE_DEFAULT));
+    logoTitle.setIcon(logoIcon);
+    // setbackground to white
+    logoTitle.setBackground(Color.WHITE);
 
     createSongList();
   
@@ -169,7 +176,18 @@ public class MP3PlayerView extends JFrame{
   }
 
   public void createRightPanel() {
-    rightPanel = new JPanel();
+    rightPanel = new JPanel(new BorderLayout());
+    rightPanel.setBackground(Color.decode("#f2f0db"));
+
+    // Create an empty panel for top padding
+    JPanel topPaddingPanel = new JPanel();
+    // topPaddingPanel.setPreferredSize(new Dimension(1, 20));
+    topPaddingPanel.setOpaque(false);
+
+    // create an empty panel for rightside padding
+    JPanel rightPaddingPanel = new JPanel();
+    // rightPaddingPanel.setPreferredSize(new Dimension(100, 1));
+    rightPaddingPanel.setOpaque(false);
 
     lyricsPanel = new JPanel(new BorderLayout());
     lyricsPanel.setBackground(Color.decode("#f3f2de"));;
@@ -178,7 +196,14 @@ public class MP3PlayerView extends JFrame{
     lyricsScrollPane = new JScrollPane(lyricsTextArea);
     lyricsPanel.add(lyricsScrollPane, BorderLayout.CENTER);
 
+    // set the lyrics background color to be the same as the right panel and text should be black
+    lyricsTextArea.setBackground(Color.decode("#f2f0db"));
+    lyricsTextArea.setForeground(Color.BLACK);
+
     rightPanel.setBackground(Color.decode("#f2f0db"));
+    rightPanel.add(topPaddingPanel, BorderLayout.NORTH);
+    rightPanel.add(rightPaddingPanel, BorderLayout.EAST);
+    rightPanel.add(lyricsPanel, BorderLayout.CENTER);
   }
 
   public void createCenterPanel() {
@@ -254,7 +279,7 @@ public class MP3PlayerView extends JFrame{
     
     //Create current currentSongDisplay Panel
     currentSongDisplayPanel = new JPanel(new FlowLayout(0,50,25));
-    currentSongDisplayPanel.setBackground(Color.decode("#f3f2de"));;
+    currentSongDisplayPanel.setBackground(Color.decode("#f0e2be"));;
 
     //Creat artist image
     artistImgLbl = new JLabel();
@@ -265,7 +290,7 @@ public class MP3PlayerView extends JFrame{
     
     //Create playback panel
     playBackPanel =  new JPanel(new FlowLayout());
-    playBackPanel.setBackground(Color.decode("#f3f2de"));;
+    playBackPanel.setBackground(Color.decode("#f0e2be"));;
 
     //Create buttons for playback Panel
     previousSongBtn = new JButton();
@@ -309,7 +334,7 @@ public class MP3PlayerView extends JFrame{
     bottomPanel.add(leftPaddingPanel, BorderLayout.WEST);
     bottomPanel.add(currentSongDisplayPanel, BorderLayout.CENTER);
     bottomPanel.add(rightPaddingPanel, BorderLayout.EAST);
-    bottomPanel.setBackground(Color.decode("#efddb0"));
+    bottomPanel.setBackground(Color.decode("#f0e2be"));
   }
 
   public void createSongList() {
