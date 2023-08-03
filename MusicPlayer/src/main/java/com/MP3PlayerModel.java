@@ -48,22 +48,12 @@ public class MP3PlayerModel {
   public BufferedReader br;
   public StringBuffer sb;
 
-  public int s_id = 0;
+  public int s_id;
   
   
   /*
    * PAUSE MUSIC
    */
-
-  // public String fetchArtistName(int id) {
-
-  //   EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
-  //   EntityManager em = emf.createEntityManager();
-
-  //   s = em.find(Song.class, s_id);
-
-  //   return s.getArtistName();
-  // }
 
   public void indexChanged(int id){
     if(s_id != id){
@@ -89,12 +79,14 @@ public class MP3PlayerModel {
 
     Song s = em.find(Song.class, s_id);
 
+  
     if (songClip == null || songStream == null || !songClip.isRunning() && s_id != -1) {
         try {
             stop();
             songStream = AudioSystem.getAudioInputStream(new File(s.getSongPath()).getAbsoluteFile());
             songClip = AudioSystem.getClip();
             songClip.open(songStream);
+            songClip.setFramePosition(0);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -112,12 +104,12 @@ public class MP3PlayerModel {
     Song s = getSong();
 
     try {
-      
+      String storedLyrics = "";
+
       reader = new FileReader(new File(s.getLyricsPath()).getAbsolutePath());
       br = new BufferedReader(reader);
-      sb = new StringBuffer(br.readLine());
-      String storedLyrics = null;
-
+      sb = new StringBuffer(storedLyrics);
+    
       System.out.println("br read = " + br.read());
 
       while((storedLyrics = br.readLine())!=null){

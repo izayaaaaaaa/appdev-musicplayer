@@ -71,6 +71,8 @@ public class MP3PlayerController {
         view.artistNameLbl.setText(model.fetchArtistName(id));
       }
 
+    
+
       model.indexChanged(view.songList.getSelectedIndex());
       model.fetchID(view.songList.getSelectedIndex());
     } 
@@ -80,8 +82,21 @@ public class MP3PlayerController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == view.playBtn) {
+         int id = view.songList.getSelectedIndex();
+
         view.playBtn.setVisible(false);
         view.pauseBtn.setVisible(true);
+
+        ImageIcon icon = new ImageIcon(model.fetchAlbumCover(id));
+        Image img = (icon).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
+        view.lyricsTextArea.setText(model.lyricsProcess(id)); //Lyrics
+        icon = new ImageIcon(img); //Album Cover
+        view.artistImgLbl.setIcon(icon); //Set Album Cover
+        view.playerImageLabel.setIcon(view.animatedGifIcon); //Start Animating Plaka
+        view.songNameLbl.setText(model.fetchSongName(id)); //Fetch Song Name
+        view.artistNameLbl.setText(model.fetchArtistName(id)); //Fetch Artist Name
+
         model.playMusic();
 
         // Add this section to start updating the progress bar
