@@ -67,7 +67,7 @@ public class MP3PlayerController {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == view.playBtn) {
-         int id = view.songList.getSelectedIndex();
+        int id = view.songList.getSelectedIndex();
 
         view.playBtn.setVisible(false);
         view.pauseBtn.setVisible(true);
