@@ -40,7 +40,7 @@ public class MP3PlayerView extends JFrame{
   JLabel songNameLbl, artistNameLbl, artistImgLbl;
 
   JTextArea lyricsTextArea;
-  JScrollPane lyricsScrollPane;
+  JScrollPane lyricsScrollPane, songListPane;
 
   JButton playBtn, pauseBtn, fastForwardBtn, backtrackBtn, nextSongBtn, previousSongBtn;
 
@@ -147,8 +147,6 @@ public class MP3PlayerView extends JFrame{
 
     logoTitle = new JLabel();    
     logoIcon = new ImageIcon(ClassLoader.getSystemResource("jukebox.png"));
-    // // set size
-    // logoIcon = new ImageIcon(logoIcon.getImage().getScaledInstance(400, 300, Image.SCALE_DEFAULT));
     logoTitle.setIcon(logoIcon);
     // setbackground to white
     logoTitle.setBackground(Color.WHITE);
@@ -159,7 +157,7 @@ public class MP3PlayerView extends JFrame{
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 0;
-    gbc.insets = new Insets(0, 0, 100, 0);
+    gbc.insets = new Insets(0, 0, 50, 0);
     gbc.anchor = GridBagConstraints.NORTH;
     leftPanel.add(logoTitle, gbc);
     
@@ -338,7 +336,7 @@ public class MP3PlayerView extends JFrame{
   }
 
   public void createSongList() {
-    songListPanel = new JPanel();
+    songListPanel = new JPanel(new BorderLayout());
     songListPanel.setBackground(Color.decode("#f0e2be"));
     songList = new JList<>();
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("musicplayer");
@@ -349,14 +347,18 @@ public class MP3PlayerView extends JFrame{
 
     String[] songTitles = new String[tracks.size()];
     for (int i = 0; i < tracks.size(); i++) {
-        Song song = tracks.get(i);
-        songTitles[i] = song.getSongTitle();
+      Song song = tracks.get(i);
+      songTitles[i] = song.getSongTitle();
     }
 
     // Set the data to the JList
     songList.setListData(songTitles);
     songList.setSelectedIndex(0);
-    songListPanel.add(songList);
+
+    songListPane = new JScrollPane(songList);
+    // songListPane.setPreferredSize(new Dimension(300, 500));
+
+    songListPanel.add(songListPane, BorderLayout.CENTER);
   }
   
   // Method to extract the current frame from the GIF image
@@ -365,9 +367,9 @@ public class MP3PlayerView extends JFrame{
     MediaTracker mediaTracker = new MediaTracker(this);
     mediaTracker.addImage(image, 0);
     try {
-        mediaTracker.waitForAll();
+      mediaTracker.waitForAll();
     } catch (InterruptedException ex) {
-        ex.printStackTrace();
+      ex.printStackTrace();
     }
 
     int width = image.getWidth(null);
