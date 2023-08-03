@@ -88,7 +88,9 @@ public class MP3PlayerController {
         view.pauseBtn.setVisible(true);
 
         ImageIcon icon = new ImageIcon(model.fetchAlbumCover(id));
-        Image img = (icon).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        Image img = (icon).getImage().getScaledInstance(view.artistImgLbl.getWidth(), view.artistImgLbl.getHeight(), Image.SCALE_SMOOTH);
+
+        System.out.println("Image Width: " + view.artistImgLbl.getHeight());
 
         view.lyricsTextArea.setText(model.lyricsProcess(id)); //Lyrics
         icon = new ImageIcon(img); //Album Cover

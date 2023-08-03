@@ -96,12 +96,12 @@ public class MP3PlayerView extends JFrame{
     gbc.gridy = 0;
     gbc.weightx = 0.4;
     mainPanel.add(centerPanel, gbc);
-
+    
     gbc.gridx = 2;
     gbc.gridy = 0;
     gbc.weightx = 0.4;
     mainPanel.add(rightPanel, gbc);
-
+    
     gbc.gridx = 0;
     gbc.gridy = 1;
     gbc.weighty = 0.1;
@@ -127,11 +127,10 @@ public class MP3PlayerView extends JFrame{
     
     // this.setLayout(new GridLayout(1, 3)); // Consider updating the GridLayout to (6, 1) if you want bottomPanel to occupy the entire bottom row
     this.add(mainPanel);
-    
     // set frame color with hex code
     this.setTitle("MP3 Player");
     this.pack();
-    this.setSize(1440, 1024);
+    //this.setSize(1440, 1024);
     // this.setResizable(true);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setVisible(true);
@@ -163,6 +162,7 @@ public class MP3PlayerView extends JFrame{
     gbc.anchor = GridBagConstraints.CENTER;
     gbc.fill = GridBagConstraints.HORIZONTAL;
     songListPanel.setBackground(Color.BLACK);
+    
     // set size of songlistpanel to leftpanel
     // songListPanel.setPreferredSize(new Dimension(300, 300));
     leftPanel.add(songListPanel, gbc);
@@ -268,12 +268,29 @@ public class MP3PlayerView extends JFrame{
     playBackPanel.setBackground(Color.decode("#f3f2de"));;
 
     //Create buttons for playback Panel
-    previousSongBtn = new JButton("Previous");
-    backtrackBtn = new JButton("Backtrack");
-    playBtn = new JButton("Play");
-    pauseBtn = new JButton("Pause");
-    fastForwardBtn = new JButton("Fast Forward");
-    nextSongBtn = new JButton("Next");
+    previousSongBtn = new JButton();
+    previousSongBtn.setBackground(Color.decode("#F2CC8F"));
+    previousSongBtn.setIcon(new ImageIcon("MusicPlayer/src/main/resources/icons/previousIcon.png"));
+   
+    backtrackBtn = new JButton();
+    backtrackBtn.setBackground(Color.decode("#F2CC8F"));
+    backtrackBtn.setIcon(new ImageIcon("MusicPlayer/src/main/resources/icons/backtrackIcon.png"));
+
+    playBtn = new JButton();
+    playBtn.setBackground(Color.decode("#F2CC8F"));
+    playBtn.setIcon(new ImageIcon("MusicPlayer/src/main/resources/icons/playIcon.png"));
+
+    pauseBtn = new JButton();
+    pauseBtn.setBackground(Color.decode("#F2CC8F"));
+    pauseBtn.setIcon(new ImageIcon("MusicPlayer/src/main/resources/icons/pauseIcon.png"));
+
+    fastForwardBtn = new JButton();
+    fastForwardBtn.setBackground(Color.decode("#F2CC8F"));
+    fastForwardBtn.setIcon(new ImageIcon("MusicPlayer/src/main/resources/icons/fastforwardIcon.png"));
+
+    nextSongBtn = new JButton();
+    nextSongBtn.setBackground(Color.decode("#F2CC8F"));
+    nextSongBtn.setIcon(new ImageIcon("MusicPlayer/src/main/resources/icons/nextIcon.png"));
 
     //Add all buttons into the playback panel
     playBackPanel.add(previousSongBtn);
